@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+<head><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Luma Farma — Painel Executivo</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=inter:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:        #0A0C12;
@@ -28,7 +30,7 @@
   --r:         14px;
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+body { font-family:'inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
 ::-webkit-scrollbar { width:4px; }
 ::-webkit-scrollbar-track { background:var(--surface); }
 ::-webkit-scrollbar-thumb { background:var(--orange); border-radius:4px; }
@@ -42,7 +44,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .live-dot { width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); animation:blink 2s infinite; }
 @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
 .logo-eyebrow span { font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--teal); }
-.logo-name { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; line-height:1; background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.logo-name { font-family:'inter',sans-serif; font-size:26px; font-weight:800; line-height:1; background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .logo-sub { font-size:11px; color:var(--text3); margin-top:4px; }
 .nav { flex:1; padding:18px 12px; overflow-y:auto; }
 .nav-group { margin-bottom:22px; }
@@ -55,20 +57,20 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .nav-badge.yellow { background:var(--yellow); color:#1a1200; box-shadow:0 0 8px rgba(255,209,102,.4); }
 .sidebar-bottom { padding:16px 22px; border-top:1px solid var(--border); }
 .sidebar-time { font-size:11px; color:var(--text3); }
-.sidebar-time strong { display:block; font-size:20px; font-family:'Syne',sans-serif; font-weight:700; color:var(--text); margin-bottom:2px; }
+.sidebar-time strong { display:block; font-size:20px; font-family:'inter',sans-serif; font-weight:700; color:var(--text); margin-bottom:2px; }
 
 /* MAIN */
 .main { margin-left:230px; flex:1; display:flex; flex-direction:column; }
 .topbar { background:var(--surface); border-bottom:1px solid var(--border); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
 .topbar-left { display:flex; align-items:center; gap:16px; }
-.page-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; }
+.page-title { font-family:'inter',sans-serif; font-size:18px; font-weight:700; }
 .breadcrumb { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text3); }
 .breadcrumb span { color:var(--orange); }
 .topbar-right { display:flex; align-items:center; gap:12px; }
 .chip { display:flex; align-items:center; gap:6px; background:var(--surface2); border:1px solid var(--border2); border-radius:8px; padding:6px 12px; font-size:11px; font-weight:500; color:var(--text2); }
 .notif-btn { position:relative; background:var(--surface2); border:1px solid var(--border2); border-radius:8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; }
 .notif-dot { position:absolute; top:6px; right:6px; width:8px; height:8px; border-radius:50%; background:var(--coral); box-shadow:0 0 6px var(--coral); border:1.5px solid var(--surface); }
-.avatar { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--orange),var(--coral)); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:white; box-shadow:var(--glow-o); cursor:pointer; }
+.avatar { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--orange),var(--coral)); display:flex; align-items:center; justify-content:center; font-family:'inter',sans-serif; font-size:13px; font-weight:700; color:white; box-shadow:var(--glow-o); cursor:pointer; }
 
 /* PAGES */
 .page { display:none; padding:28px 32px; animation:fadeUp .35s ease; }
@@ -77,7 +79,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 
 /* SECTION HEADER */
 .sec-head { display:flex; align-items:center; gap:12px; margin-bottom:22px; }
-.sec-title { font-family:'Syne',sans-serif; font-size:16px; font-weight:700; }
+.sec-title { font-family:'inter',sans-serif; font-size:16px; font-weight:700; }
 .sec-tag { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 10px; border-radius:20px; background:rgba(255,107,26,.15); color:var(--orange2); border:1px solid rgba(255,107,26,.25); }
 .sec-tag.teal { background:rgba(6,214,160,.12); color:var(--teal); border-color:rgba(6,214,160,.25); }
 .sec-tag.coral { background:rgba(255,77,109,.12); color:var(--coral); border-color:rgba(255,77,109,.25); }
@@ -107,7 +109,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .card-glow-c  { box-shadow:0 0 0 1px rgba(255,77,109,.2),var(--glow-c); border-color:rgba(255,77,109,.3); }
 
 .kpi-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); margin-bottom:10px; }
-.kpi-val { font-family:'Syne',sans-serif; font-size:28px; font-weight:800; color:var(--text); line-height:1; letter-spacing:-0.5px; }
+.kpi-val { font-family:'inter',sans-serif; font-size:28px; font-weight:800; color:var(--text); line-height:1; letter-spacing:-0.5px; }
 .kpi-val.orange { background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .kpi-val.teal { background:linear-gradient(135deg,#06D6A0,#4EA8FF); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .kpi-val.yellow { color:var(--yellow); }
@@ -200,7 +202,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
 .fc-chip { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 10px; text-align:center; transition:all .2s; }
 .fc-chip:hover { border-color:rgba(255,107,26,.4); background:rgba(255,107,26,.06); }
 .fc-day { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text3); margin-bottom:6px; }
-.fc-val { font-family:'Syne',sans-serif; font-size:14px; font-weight:800; color:var(--orange2); }
+.fc-val { font-family:'inter',sans-serif; font-size:14px; font-weight:800; color:var(--orange2); }
 .fc-peak { border-color:rgba(255,107,26,.4); background:linear-gradient(135deg,rgba(255,107,26,.1),rgba(255,77,109,.06)); }
 .fc-peak .fc-val { background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 
@@ -556,7 +558,7 @@ body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:v
             <circle cx="60" cy="60" r="46" fill="none" stroke="var(--surface2)" stroke-width="18"/>
             <circle cx="60" cy="60" r="46" fill="none" stroke="url(#dg1)" stroke-width="18" stroke-dasharray="182 107" stroke-dashoffset="-28" stroke-linecap="round"/>
             <circle cx="60" cy="60" r="46" fill="none" stroke="rgba(255,107,26,.35)" stroke-width="18" stroke-dasharray="107 182" stroke-dashoffset="154" stroke-linecap="round"/>
-            <text x="60" y="55" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text)" font-family="'Syne',sans-serif">63%</text>
+            <text x="60" y="55" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text)" font-family="'inter',sans-serif">63%</text>
             <text x="60" y="70" text-anchor="middle" font-size="9" fill="var(--text3)">genérico</text>
           </svg>
           <div class="donut-legend">
