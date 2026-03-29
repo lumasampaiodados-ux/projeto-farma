@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luma Farma — Painel Executivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #0A0C12;
+  --surface:   #111420;
+  --surface2:  #181C2A;
+  --border:    rgba(255,255,255,0.07);
+  --border2:   rgba(255,255,255,0.12);
+  --orange:    #FF6B1A;
+  --orange2:   #FF8C42;
+  --coral:     #FF4D6D;
+  --yellow:    #FFD166;
+  --teal:      #06D6A0;
+  --blue:      #4EA8FF;
+  --purple:    #9B72FF;
+  --glow-o:    0 0 28px rgba(255,107,26,0.35);
+  --glow-c:    0 0 28px rgba(255,77,109,0.3);
+  --glow-t:    0 0 28px rgba(6,214,160,0.3);
+  --text:      #F0F2FF;
+  --text2:     #8B91B0;
+  --text3:     #5A607A;
+  --r:         14px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Plus Jakarta Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--orange); border-radius:4px; }
+
+.shell { display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+.sidebar { width:230px; background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; top:0; left:0; bottom:0; z-index:100; }
+.logo-wrap { padding:24px 22px 20px; border-bottom:1px solid var(--border); }
+
+.back-btn {
+  display:flex; align-items:center; gap:6px;
+  background:rgba(255,107,26,.08);
+  border:1px solid rgba(255,107,26,.15);
+  border-radius:8px;
+  padding:7px 12px;
+  font-size:11px;
+  font-weight:600;
+  color:var(--orange2);
+  text-decoration:none;
+  margin-bottom:16px;
+  transition:all .2s;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  cursor:pointer;
+}
+.back-btn:hover { background:rgba(255,107,26,.15); border-color:rgba(255,107,26,.3); }
+
+.logo-eyebrow { display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+.live-dot { width:7px; height:7px; border-radius:50%; background:var(--teal); box-shadow:0 0 8px var(--teal); animation:blink 2s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+.logo-eyebrow span { font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--teal); }
+.logo-name { font-family:'Inter',sans-serif; font-size:24px; font-weight:800; line-height:1; background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.logo-sub { font-size:11px; color:var(--text3); margin-top:3px; }
+.nav { flex:1; padding:18px 12px; overflow-y:auto; }
+.nav-group { margin-bottom:22px; }
+.nav-group-label { font-size:9px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:var(--text3); padding:0 10px; margin-bottom:6px; }
+.nav-item { display:flex; align-items:center; gap:10px; width:100%; padding:10px 12px; border-radius:10px; border:1px solid transparent; background:none; color:var(--text2); font-size:13px; font-weight:500; font-family:'Plus Jakarta Sans',sans-serif; cursor:pointer; text-align:left; transition:all .2s; margin-bottom:2px; }
+.nav-item:hover { background:rgba(255,107,26,.08); color:var(--orange2); }
+.nav-item.active { background:linear-gradient(135deg,rgba(255,107,26,.18),rgba(255,77,109,.1)); color:var(--text); border-color:rgba(255,107,26,.25); }
+.nav-icon { font-size:16px; width:22px; text-align:center; flex-shrink:0; }
+.nav-badge { margin-left:auto; background:var(--coral); color:white; font-size:9px; font-weight:700; padding:1px 6px; border-radius:10px; box-shadow:0 0 8px rgba(255,77,109,.5); }
+.nav-badge.yellow { background:var(--yellow); color:#1a1200; box-shadow:0 0 8px rgba(255,209,102,.4); }
+.sidebar-bottom { padding:16px 22px; border-top:1px solid var(--border); }
+.sidebar-time { font-size:11px; color:var(--text3); }
+.sidebar-time strong { display:block; font-size:20px; font-family:'Inter',sans-serif; font-weight:700; color:var(--text); margin-bottom:2px; }
+
+/* MAIN */
+.main { margin-left:230px; flex:1; display:flex; flex-direction:column; }
+.topbar { background:var(--surface); border-bottom:1px solid var(--border); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
+.topbar-left { display:flex; align-items:center; gap:16px; }
+.page-title { font-family:'Inter',sans-serif; font-size:18px; font-weight:700; }
+.breadcrumb { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text3); }
+.breadcrumb span { color:var(--orange); }
+.topbar-right { display:flex; align-items:center; gap:12px; }
+.chip { display:flex; align-items:center; gap:6px; background:var(--surface2); border:1px solid var(--border2); border-radius:8px; padding:6px 12px; font-size:11px; font-weight:500; color:var(--text2); }
+.notif-btn { position:relative; background:var(--surface2); border:1px solid var(--border2); border-radius:8px; width:36px; height:36px; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; }
+.notif-dot { position:absolute; top:6px; right:6px; width:8px; height:8px; border-radius:50%; background:var(--coral); box-shadow:0 0 6px var(--coral); border:1.5px solid var(--surface); }
+.avatar { width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--orange),var(--coral)); display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; font-size:13px; font-weight:700; color:white; box-shadow:var(--glow-o); cursor:pointer; }
+
+/* PAGES */
+.page { display:none; padding:28px 32px; animation:fadeUp .35s ease; }
+.page.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+.sec-head { display:flex; align-items:center; gap:12px; margin-bottom:22px; }
+.sec-title { font-family:'Inter',sans-serif; font-size:16px; font-weight:700; }
+.sec-tag { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:3px 10px; border-radius:20px; background:rgba(255,107,26,.15); color:var(--orange2); border:1px solid rgba(255,107,26,.25); }
+.sec-tag.teal { background:rgba(6,214,160,.12); color:var(--teal); border-color:rgba(6,214,160,.25); }
+.sec-tag.coral { background:rgba(255,77,109,.12); color:var(--coral); border-color:rgba(255,77,109,.25); }
+.sec-tag.blue { background:rgba(78,168,255,.12); color:var(--blue); border-color:rgba(78,168,255,.25); }
+
+.kpi-grid { display:grid; gap:16px; }
+.g4 { grid-template-columns:repeat(4,1fr); }
+.g3 { grid-template-columns:repeat(3,1fr); }
+.g2 { grid-template-columns:repeat(2,1fr); }
+.g65 { grid-template-columns:62% 38%; }
+.mt16 { margin-top:16px; }
+.mt24 { margin-top:24px; }
+.mt32 { margin-top:32px; }
+
+.card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); padding:20px 22px; position:relative; overflow:hidden; transition:transform .2s,border-color .2s; }
+.card:hover { transform:translateY(-2px); border-color:var(--border2); }
+.card::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.02) 0%,transparent 60%); pointer-events:none; }
+.card-accent  { border-top:2px solid var(--orange); }
+.card-coral   { border-top:2px solid var(--coral); }
+.card-teal    { border-top:2px solid var(--teal); }
+.card-yellow  { border-top:2px solid var(--yellow); }
+.card-blue    { border-top:2px solid var(--blue); }
+.card-glow-o  { box-shadow:0 0 0 1px rgba(255,107,26,.2),var(--glow-o); border-color:rgba(255,107,26,.3); }
+.card-glow-t  { box-shadow:0 0 0 1px rgba(6,214,160,.2),var(--glow-t); border-color:rgba(6,214,160,.3); }
+.card-glow-c  { box-shadow:0 0 0 1px rgba(255,77,109,.2),var(--glow-c); border-color:rgba(255,77,109,.3); }
+
+.kpi-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); margin-bottom:10px; }
+.kpi-val { font-family:'Inter',sans-serif; font-size:28px; font-weight:800; color:var(--text); line-height:1; letter-spacing:-0.5px; }
+.kpi-val.orange { background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.kpi-val.teal { background:linear-gradient(135deg,#06D6A0,#4EA8FF); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.kpi-val.yellow { color:var(--yellow); }
+.kpi-sub { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--text3); margin-top:8px; }
+.badge { display:inline-flex; align-items:center; gap:3px; font-size:10px; font-weight:700; padding:2px 8px; border-radius:20px; }
+.badge-up   { background:rgba(6,214,160,.15);  color:var(--teal); }
+.badge-down { background:rgba(255,77,109,.15);  color:var(--coral); }
+.badge-flat { background:rgba(255,209,102,.12); color:var(--yellow); }
+.card-icon  { position:absolute; top:16px; right:18px; font-size:28px; opacity:.06; }
+
+.prog-wrap { margin-top:14px; }
+.prog-labels { display:flex; justify-content:space-between; font-size:10px; color:var(--text3); margin-bottom:5px; }
+.prog-bar { height:6px; background:var(--surface2); border-radius:10px; overflow:hidden; }
+.prog-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--orange),var(--coral)); }
+.prog-fill.teal   { background:linear-gradient(90deg,#06D6A0,#4EA8FF); }
+.prog-fill.yellow { background:linear-gradient(90deg,var(--yellow),#FFA500); }
+.prog-fill.coral  { background:linear-gradient(90deg,var(--coral),#FF8C42); }
+
+.spark { display:flex; align-items:flex-end; gap:3px; height:28px; margin-top:10px; }
+.spark-bar { flex:1; border-radius:3px 3px 0 0; background:rgba(255,107,26,.25); min-width:6px; }
+
+.chart-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r); padding:22px; }
+.chart-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+.chart-title { font-size:13px; font-weight:700; color:var(--text); }
+.legend { display:flex; gap:14px; font-size:10px; color:var(--text3); }
+.ldot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:4px; }
+
+.mini-bar-row { display:flex; align-items:center; gap:10px; margin-bottom:11px; }
+.mini-bar-lbl { width:100px; font-size:11px; color:var(--text2); flex-shrink:0; }
+.mini-bar-bg { flex:1; height:7px; background:var(--surface2); border-radius:10px; overflow:hidden; }
+.mini-bar-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,var(--orange),var(--coral)); }
+.mini-bar-val { width:44px; text-align:right; font-size:11px; font-weight:700; color:var(--text); }
+
+.alert-row { display:flex; align-items:center; gap:14px; background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; margin-bottom:8px; transition:transform .2s; }
+.alert-row:hover { transform:translateX(4px); }
+.alert-row.danger { border-left:3px solid var(--coral); }
+.alert-row.warn   { border-left:3px solid var(--yellow); }
+.alert-row.ok     { border-left:3px solid var(--teal); }
+.alert-ico { font-size:20px; flex-shrink:0; }
+.alert-body { flex:1; }
+.alert-t { font-size:12px; font-weight:600; color:var(--text); }
+.alert-d { font-size:11px; color:var(--text3); margin-top:2px; }
+.alert-v { font-size:13px; font-weight:700; flex-shrink:0; }
+
+.tbl { width:100%; border-collapse:separate; border-spacing:0; font-size:12px; }
+.tbl thead th { padding:10px 14px; text-align:left; font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--text3); background:var(--surface2); border-bottom:1px solid var(--border); }
+.tbl thead th:first-child { border-radius:8px 0 0 0; }
+.tbl thead th:last-child { border-radius:0 8px 0 0; }
+.tbl tbody tr { border-bottom:1px solid var(--border); transition:background .15s; }
+.tbl tbody tr:hover { background:rgba(255,255,255,.03); }
+.tbl tbody td { padding:12px 14px; color:var(--text2); }
+.rnk { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:6px; font-size:10px; font-weight:700; }
+.rnk-1 { background:rgba(255,209,102,.15); color:var(--yellow); border:1px solid rgba(255,209,102,.3); }
+.rnk-2 { background:rgba(240,240,240,.08); color:#ccc; border:1px solid rgba(255,255,255,.12); }
+.rnk-3 { background:rgba(255,140,66,.12); color:var(--orange2); border:1px solid rgba(255,140,66,.25); }
+.rnk-n { background:var(--surface2); color:var(--text3); border:1px solid var(--border); }
+.pill { display:inline-block; padding:2px 9px; border-radius:20px; font-size:10px; font-weight:600; }
+.pill-teal   { background:rgba(6,214,160,.12);  color:var(--teal);   border:1px solid rgba(6,214,160,.2); }
+.pill-orange { background:rgba(255,107,26,.12); color:var(--orange2);border:1px solid rgba(255,107,26,.2); }
+.pill-coral  { background:rgba(255,77,109,.12); color:var(--coral);  border:1px solid rgba(255,77,109,.2); }
+.pill-yellow { background:rgba(255,209,102,.1); color:var(--yellow); border:1px solid rgba(255,209,102,.2); }
+.pill-blue   { background:rgba(78,168,255,.1);  color:var(--blue);   border:1px solid rgba(78,168,255,.2); }
+
+.heat-grid { display:grid; grid-template-columns:repeat(12,1fr); gap:6px; margin-top:14px; }
+.heat-cell { border-radius:8px; padding:10px 4px 8px; text-align:center; font-size:9px; font-weight:600; }
+
+.pay-wrap { display:flex; align-items:flex-end; gap:10px; height:90px; margin-top:16px; }
+.pay-col { flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; }
+.pay-bar { width:100%; border-radius:6px 6px 0 0; }
+.pay-lbl { font-size:9px; color:var(--text3); text-align:center; }
+.pay-val { font-size:10px; font-weight:700; color:var(--text); }
+
+.donut-wrap { display:flex; align-items:center; gap:20px; }
+.donut-legend { flex:1; display:flex; flex-direction:column; gap:10px; }
+.donut-row { display:flex; align-items:center; gap:8px; font-size:11px; color:var(--text2); }
+.donut-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+.donut-pct { margin-left:auto; font-weight:700; font-size:12px; color:var(--text); }
+
+.forecast-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; margin-top:14px; }
+.fc-chip { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 10px; text-align:center; transition:all .2s; }
+.fc-chip:hover { border-color:rgba(255,107,26,.4); background:rgba(255,107,26,.06); }
+.fc-day { font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text3); margin-bottom:6px; }
+.fc-val { font-family:'Inter',sans-serif; font-size:14px; font-weight:800; color:var(--orange2); }
+.fc-peak { border-color:rgba(255,107,26,.4); background:linear-gradient(135deg,rgba(255,107,26,.1),rgba(255,77,109,.06)); }
+.fc-peak .fc-val { background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.kpi-status-row { display:flex; align-items:center; padding:14px 16px; border-radius:12px; background:var(--surface2); border:1px solid var(--border); margin-bottom:8px; gap:16px; transition:all .2s; }
+.kpi-status-row:hover { border-color:var(--border2); transform:translateX(3px); }
+.ks-icon { font-size:20px; width:28px; text-align:center; flex-shrink:0; }
+.ks-name { flex:1; font-size:13px; font-weight:600; color:var(--text); }
+.ks-val  { font-size:14px; font-weight:700; margin-right:8px; }
+.ks-meta { font-size:10px; color:var(--text3); width:80px; text-align:right; }
+
+.insight-card { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:flex-start; gap:14px; transition:all .2s; }
+.insight-card:hover { border-color:rgba(6,214,160,.3); box-shadow:0 0 20px rgba(6,214,160,.08); }
+.insight-ico { width:40px; height:40px; border-radius:10px; background:rgba(6,214,160,.12); border:1px solid rgba(6,214,160,.2); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.insight-t { font-size:13px; font-weight:600; color:var(--text); margin-bottom:4px; }
+.insight-d { font-size:11px; color:var(--text3); line-height:1.5; }
+.insight-v { font-size:13px; font-weight:700; color:var(--teal); margin-top:6px; }
+
+@media(max-width:1200px){
+  .g4{grid-template-columns:repeat(2,1fr);}
+  .g2,.g65{grid-template-columns:1fr;}
+  .forecast-grid{grid-template-columns:repeat(4,1fr);}
+  .sidebar{width:200px;}
+  .main{margin-left:200px;}
+}
+
+@media(max-width:768px){
+  .sidebar{display:none;}
+  .main{margin-left:0;}
+  .topbar{padding:0 16px;}
+  .page{padding:20px 16px;}
+  .g4,.g3{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<aside class="sidebar">
+  <div class="logo-wrap">
+    <a href="portfolio.html" class="back-btn">← Portfólio</a>
+    <div class="logo-eyebrow"><span class="live-dot"></span><span>Ao vivo</span></div>
+    <div class="logo-name">Luma Farma</div>
+    <div class="logo-sub">Painel Executivo</div>
+  </div>
+  <nav class="nav">
+    <div class="nav-group">
+      <div class="nav-group-label">Principal</div>
+      <button class="nav-item active" onclick="goPage('financeiro')"><span class="nav-icon">💰</span>Financeiro</button>
+      <button class="nav-item" onclick="goPage('vendas')"><span class="nav-icon">🛒</span>Vendas & Operação</button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Gestão</div>
+      <button class="nav-item" onclick="goPage('estoque')"><span class="nav-icon">📦</span>Estoque<span class="nav-badge">3</span></button>
+      <button class="nav-item" onclick="goPage('clientes')"><span class="nav-icon">👥</span>Clientes</button>
+      <button class="nav-item" onclick="goPage('farmacia')"><span class="nav-icon">💊</span>Farmácia</button>
+    </div>
+    <div class="nav-group">
+      <div class="nav-group-label">Análise</div>
+      <button class="nav-item" onclick="goPage('performance')"><span class="nav-icon">📈</span>Performance</button>
+      <button class="nav-item" onclick="goPage('inteligente')"><span class="nav-icon">🧠</span>Insights IA<span class="nav-badge yellow">2</span></button>
+    </div>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="sidebar-time">
+      <strong id="clock">--:--</strong>
+      <span id="dateStr">carregando...</span>
+    </div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="page-title" id="pageTitle">Financeiro</div>
+      <div class="breadcrumb">LumaFarma › <span id="pageBread">Financeiro</span></div>
+    </div>
+    <div class="topbar-right">
+      <div class="chip">📅 <span id="monthChip">—</span></div>
+      <div class="chip" style="color:var(--teal);border-color:rgba(6,214,160,.2)">● Sistema OK</div>
+      <div class="notif-btn">🔔<span class="notif-dot"></span></div>
+      <div class="avatar">LF</div>
+    </div>
+  </div>
+
+  <!-- FINANCEIRO -->
+  <div class="page active" id="page-financeiro">
+    <div class="sec-head"><span class="sec-title">Resumo Financeiro</span><span class="sec-tag">Junho 2025</span></div>
+    <div class="kpi-grid g4">
+      <div class="card card-glow-o"><div class="card-icon">💰</div><div class="kpi-label">Faturamento Hoje</div><div class="kpi-val orange">R$ 8.430</div><div class="kpi-sub"><span class="badge badge-up">▲ 12%</span> vs ontem</div><div class="spark"><div class="spark-bar" style="height:40%"></div><div class="spark-bar" style="height:65%"></div><div class="spark-bar" style="height:45%"></div><div class="spark-bar" style="height:80%"></div><div class="spark-bar" style="height:55%"></div><div class="spark-bar" style="height:90%"></div><div class="spark-bar" style="height:100%;background:var(--orange);box-shadow:0 0 6px var(--orange)"></div></div></div>
+      <div class="card card-accent"><div class="card-icon">📅</div><div class="kpi-label">Faturamento Mensal</div><div class="kpi-val">R$ 142.600</div><div class="kpi-sub"><span class="badge badge-up">▲ 8,4%</span> vs mês ant.</div><div class="prog-wrap"><div class="prog-labels"><span>Meta R$ 160k</span><span>89%</span></div><div class="prog-bar"><div class="prog-fill" style="width:89%"></div></div></div></div>
+      <div class="card card-teal"><div class="card-icon">🏷️</div><div class="kpi-label">Ticket Médio</div><div class="kpi-val teal">R$ 62,40</div><div class="kpi-sub"><span class="badge badge-up">▲ 4%</span> vs mês ant.</div><div class="spark"><div class="spark-bar" style="height:50%;background:rgba(6,214,160,.2)"></div><div class="spark-bar" style="height:70%;background:rgba(6,214,160,.2)"></div><div class="spark-bar" style="height:60%;background:rgba(6,214,160,.2)"></div><div class="spark-bar" style="height:85%;background:rgba(6,214,160,.2)"></div><div class="spark-bar" style="height:75%;background:rgba(6,214,160,.2)"></div><div class="spark-bar" style="height:90%;background:rgba(6,214,160,.2)"></div><div class="spark-bar" style="height:100%;background:var(--teal);box-shadow:0 0 6px var(--teal)"></div></div></div>
+      <div class="card card-yellow"><div class="card-icon">📊</div><div class="kpi-label">Margem de Lucro</div><div class="kpi-val yellow">24,8%</div><div class="kpi-sub"><span class="badge badge-flat">→ Estável</span></div><div class="prog-wrap"><div class="prog-labels"><span>Meta 26%</span><span>95%</span></div><div class="prog-bar"><div class="prog-fill yellow" style="width:95%"></div></div></div></div>
+    </div>
+    <div class="kpi-grid g4 mt16">
+      <div class="card card-teal"><div class="kpi-label">Lucro Bruto</div><div class="kpi-val teal" style="font-size:22px">R$ 35.365</div><div class="kpi-sub">Acumulado junho</div><div class="prog-wrap"><div class="prog-labels"><span>CMV deduzido</span><span>75%</span></div><div class="prog-bar"><div class="prog-fill teal" style="width:75%"></div></div></div></div>
+      <div class="card card-accent"><div class="kpi-label">Lucro Líquido</div><div class="kpi-val" style="font-size:22px">R$ 21.390</div><div class="kpi-sub">Margem líquida 15%</div><div class="prog-wrap"><div class="prog-labels"><span>Após despesas</span><span>15%</span></div><div class="prog-bar"><div class="prog-fill" style="width:58%"></div></div></div></div>
+      <div class="card card-glow-c"><div class="kpi-label">CMV</div><div class="kpi-val" style="color:var(--coral);font-size:22px">R$ 107.235</div><div class="kpi-sub"><span class="badge badge-down">75,2%</span> acima da meta</div><div class="prog-wrap"><div class="prog-labels"><span>Meta 72%</span><span>⚠ acima</span></div><div class="prog-bar"><div class="prog-fill coral" style="width:75%"></div></div></div></div>
+      <div class="card card-glow-o"><div class="kpi-label">Meta vs Realizado</div><div class="kpi-val orange">89,1%</div><div class="kpi-sub">Faltam R$ 17.400</div><div class="prog-wrap"><div class="prog-labels"><span>Realizado</span><span>R$ 142,6k</span></div><div class="prog-bar"><div class="prog-fill" style="width:89%"></div></div></div></div>
+    </div>
+    <div class="mt32 chart-card">
+      <div class="chart-head"><div class="chart-title">Faturamento Diário — Junho 2025</div><div class="legend"><span><span class="ldot" style="background:var(--orange)"></span>Realizado</span><span><span class="ldot" style="background:rgba(255,255,255,.12)"></span>Meta/dia</span></div></div>
+      <svg viewBox="0 0 800 165" style="width:100%;height:165px" preserveAspectRatio="none">
+        <defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF8C42"/><stop offset="100%" stop-color="#FF4D6D" stop-opacity=".8"/></linearGradient><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF6B1A"/><stop offset="100%" stop-color="#FF4D6D" stop-opacity=".5"/></linearGradient></defs>
+        <line x1="0" y1="30" x2="800" y2="30" stroke="rgba(255,255,255,.04)" stroke-width="1"/><line x1="0" y1="70" x2="800" y2="70" stroke="rgba(255,255,255,.04)" stroke-width="1"/><line x1="0" y1="110" x2="800" y2="110" stroke="rgba(255,255,255,.04)" stroke-width="1"/><line x1="0" y1="150" x2="800" y2="150" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+        <line x1="0" y1="58" x2="800" y2="58" stroke="rgba(255,107,26,.2)" stroke-width="1.5" stroke-dasharray="6,5"/>
+        <rect x="4" y="50" width="34" height="100" rx="5" fill="url(#bg2)"/><rect x="43" y="35" width="34" height="115" rx="5" fill="url(#bg1)"/><rect x="82" y="65" width="34" height="85" rx="5" fill="url(#bg2)"/><rect x="121" y="28" width="34" height="122" rx="5" fill="url(#bg1)"/><rect x="160" y="48" width="34" height="102" rx="5" fill="url(#bg2)"/><rect x="199" y="20" width="34" height="130" rx="5" fill="url(#bg1)"/><rect x="238" y="62" width="34" height="88" rx="5" fill="url(#bg2)"/><rect x="277" y="38" width="34" height="112" rx="5" fill="url(#bg1)"/><rect x="316" y="52" width="34" height="98" rx="5" fill="url(#bg2)"/><rect x="355" y="30" width="34" height="120" rx="5" fill="url(#bg1)"/><rect x="394" y="45" width="34" height="105" rx="5" fill="url(#bg2)"/><rect x="433" y="18" width="34" height="132" rx="5" fill="url(#bg1)"/><rect x="472" y="40" width="34" height="110" rx="5" fill="url(#bg2)"/><rect x="511" y="33" width="34" height="117" rx="5" fill="url(#bg1)"/><rect x="550" y="22" width="34" height="128" rx="5" fill="url(#bg1)"/><rect x="589" y="50" width="34" height="100" rx="5" fill="url(#bg2)"/><rect x="628" y="15" width="34" height="135" rx="5" fill="url(#bg1)"/><rect x="667" y="37" width="34" height="113" rx="5" fill="url(#bg2)"/><rect x="706" y="28" width="34" height="122" rx="5" fill="url(#bg1)"/><rect x="745" y="10" width="34" height="140" rx="5" fill="url(#bg1)" style="filter:drop-shadow(0 0 8px rgba(255,107,26,.6))"/>
+        <text x="21" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">01</text><text x="60" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">02</text><text x="99" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">03</text><text x="138" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">04</text><text x="177" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">05</text><text x="216" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">06</text><text x="255" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">07</text><text x="294" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">08</text><text x="333" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">09</text><text x="372" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">10</text><text x="411" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">11</text><text x="450" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">12</text><text x="489" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">13</text><text x="528" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">14</text><text x="567" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">15</text><text x="606" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">16</text><text x="645" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">17</text><text x="684" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">18</text><text x="723" y="160" font-size="8" text-anchor="middle" fill="rgba(255,255,255,.25)">19</text><text x="762" y="160" font-size="8" text-anchor="middle" fill="var(--orange2)" font-weight="bold">20</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- VENDAS -->
+  <div class="page" id="page-vendas">
+    <div class="sec-head"><span class="sec-title">Vendas & Operação</span><span class="sec-tag">Hoje + Mês</span></div>
+    <div class="kpi-grid g4">
+      <div class="card card-glow-o"><div class="card-icon">🛒</div><div class="kpi-label">Vendas Hoje</div><div class="kpi-val orange">135</div><div class="kpi-sub"><span class="badge badge-up">▲ 9%</span> vs ontem</div></div>
+      <div class="card card-accent"><div class="card-icon">📋</div><div class="kpi-label">Vendas no Mês</div><div class="kpi-val">2.284</div><div class="kpi-sub"><span class="badge badge-up">▲ 6%</span> vs mês ant.</div></div>
+      <div class="card card-blue"><div class="card-icon">📦</div><div class="kpi-label">Produtos Vendidos</div><div class="kpi-val" style="color:var(--blue)">5.610</div><div class="kpi-sub">unidades no mês</div></div>
+      <div class="card card-teal"><div class="card-icon">⏰</div><div class="kpi-label">Pico de Vendas</div><div class="kpi-val teal">10–12h</div><div class="kpi-sub">maior volume diário</div></div>
+    </div>
+    <div class="kpi-grid g65 mt24">
+      <div class="chart-card">
+        <div class="chart-head"><div class="chart-title">Vendas por Categoria</div></div>
+        <div class="mini-bar-row mt16"><span class="mini-bar-lbl">Medicamentos</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:72%"></div></div><span class="mini-bar-val">72%</span></div>
+        <div class="mini-bar-row"><span class="mini-bar-lbl">Higiene Pessoal</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:14%;background:linear-gradient(90deg,var(--yellow),#FFA500)"></div></div><span class="mini-bar-val">14%</span></div>
+        <div class="mini-bar-row"><span class="mini-bar-lbl">Perfumaria</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:7%;background:linear-gradient(90deg,var(--purple),var(--blue))"></div></div><span class="mini-bar-val">7%</span></div>
+        <div class="mini-bar-row"><span class="mini-bar-lbl">Dermocosméticos</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:5%;background:linear-gradient(90deg,var(--teal),var(--blue))"></div></div><span class="mini-bar-val">5%</span></div>
+        <div class="mini-bar-row"><span class="mini-bar-lbl">Outros</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:2%;background:rgba(255,255,255,.15)"></div></div><span class="mini-bar-val">2%</span></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head"><div class="chart-title">Forma de Pagamento</div></div>
+        <div class="pay-wrap">
+          <div class="pay-col"><span class="pay-val">44%</span><div class="pay-bar" style="height:72px;background:linear-gradient(180deg,#FF8C42,#FF4D6D);box-shadow:0 0 12px rgba(255,107,26,.4)"></div><span class="pay-lbl">PIX</span></div>
+          <div class="pay-col"><span class="pay-val">38%</span><div class="pay-bar" style="height:60px;background:linear-gradient(180deg,var(--blue),var(--purple))"></div><span class="pay-lbl">Cartão</span></div>
+          <div class="pay-col"><span class="pay-val">12%</span><div class="pay-bar" style="height:36px;background:linear-gradient(180deg,var(--yellow),#FFA500)"></div><span class="pay-lbl">Dinheiro</span></div>
+          <div class="pay-col"><span class="pay-val">6%</span><div class="pay-bar" style="height:20px;background:linear-gradient(180deg,var(--teal),var(--blue))"></div><span class="pay-lbl">Convênio</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-card mt24">
+      <div class="chart-head"><div class="chart-title">Mapa de Calor — Horário de Vendas</div></div>
+      <div class="heat-grid">
+        <div class="heat-cell" style="background:rgba(255,107,26,.06);color:var(--text3)">08h<br><small style="font-size:8px;opacity:.6">baixo</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.18);color:var(--text2)">09h<br><small style="font-size:8px;opacity:.6">médio</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.5);color:white">10h<br><small style="font-size:8px">ALTO</small></div>
+        <div class="heat-cell" style="background:var(--orange);color:white;box-shadow:0 0 14px rgba(255,107,26,.5)">11h<br><small style="font-size:8px">PICO</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.5);color:white">12h<br><small style="font-size:8px">ALTO</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.22);color:var(--text2)">13h<br><small style="font-size:8px;opacity:.6">médio</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.28);color:var(--text2)">14h<br><small style="font-size:8px;opacity:.6">médio</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.34);color:var(--text2)">15h<br><small style="font-size:8px;opacity:.6">médio</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.44);color:white">16h<br><small style="font-size:8px">ALTO</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.28);color:var(--text2)">17h<br><small style="font-size:8px;opacity:.6">médio</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.14);color:var(--text3)">18h<br><small style="font-size:8px;opacity:.6">baixo</small></div>
+        <div class="heat-cell" style="background:rgba(255,107,26,.05);color:var(--text3)">19h<br><small style="font-size:8px;opacity:.6">baixo</small></div>
+      </div>
+    </div>
+    <div class="chart-card mt24">
+      <div class="chart-head"><div class="chart-title">🏆 Top 10 Produtos Mais Vendidos</div><span class="sec-tag">Junho</span></div>
+      <table class="tbl">
+        <thead><tr><th>#</th><th>Produto</th><th>Categoria</th><th>Qtd</th><th>Receita</th><th>Tendência</th></tr></thead>
+        <tbody>
+          <tr><td><span class="rnk rnk-1">1</span></td><td>Dipirona 500mg 10cp</td><td><span class="pill pill-blue">Medic.</span></td><td>342</td><td>R$ 2.565</td><td><span class="badge badge-up">▲ 18%</span></td></tr>
+          <tr><td><span class="rnk rnk-2">2</span></td><td>Ibuprofeno 600mg</td><td><span class="pill pill-blue">Medic.</span></td><td>289</td><td>R$ 3.468</td><td><span class="badge badge-up">▲ 11%</span></td></tr>
+          <tr><td><span class="rnk rnk-3">3</span></td><td>Omeprazol 20mg</td><td><span class="pill pill-blue">Medic.</span></td><td>256</td><td>R$ 4.352</td><td><span class="badge badge-flat">→ Estável</span></td></tr>
+          <tr><td><span class="rnk rnk-n">4</span></td><td>Amoxicilina 875mg</td><td><span class="pill pill-blue">Medic.</span></td><td>198</td><td>R$ 5.544</td><td><span class="badge badge-up">▲ 5%</span></td></tr>
+          <tr><td><span class="rnk rnk-n">5</span></td><td>Protetor Solar FPS50</td><td><span class="pill pill-orange">Dermo.</span></td><td>187</td><td>R$ 8.415</td><td><span class="badge badge-up">▲ 22%</span></td></tr>
+          <tr><td><span class="rnk rnk-n">6</span></td><td>Soro Fisiológico 250ml</td><td><span class="pill pill-blue">Medic.</span></td><td>164</td><td>R$ 1.640</td><td><span class="badge badge-flat">→ Estável</span></td></tr>
+          <tr><td><span class="rnk rnk-n">7</span></td><td>Vitamina C 1g Efervescente</td><td><span class="pill pill-teal">Suplem.</span></td><td>153</td><td>R$ 3.825</td><td><span class="badge badge-up">▲ 8%</span></td></tr>
+          <tr><td><span class="rnk rnk-n">8</span></td><td>Shampoo Anticaspa</td><td><span class="pill pill-yellow">Higiene</span></td><td>142</td><td>R$ 4.970</td><td><span class="badge badge-down">▼ 3%</span></td></tr>
+          <tr><td><span class="rnk rnk-n">9</span></td><td>Metformina 850mg</td><td><span class="pill pill-blue">Medic.</span></td><td>138</td><td>R$ 2.484</td><td><span class="badge badge-up">▲ 2%</span></td></tr>
+          <tr><td><span class="rnk rnk-n">10</span></td><td>Losartana 50mg</td><td><span class="pill pill-blue">Medic.</span></td><td>121</td><td>R$ 1.815</td><td><span class="badge badge-flat">→ Estável</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ESTOQUE -->
+  <div class="page" id="page-estoque">
+    <div class="sec-head"><span class="sec-title">Controle de Estoque</span><span class="sec-tag coral">⚠ 3 Alertas Críticos</span></div>
+    <div class="kpi-grid g4">
+      <div class="card card-accent"><div class="card-icon">🏪</div><div class="kpi-label">Valor Total Estoque</div><div class="kpi-val">R$ 312.450</div><div class="kpi-sub">2.840 itens ativos</div></div>
+      <div class="card card-yellow"><div class="card-icon">📉</div><div class="kpi-label">Estoque Crítico</div><div class="kpi-val yellow">47 itens</div><div class="kpi-sub"><span class="badge badge-down">abaixo do mínimo</span></div></div>
+      <div class="card card-glow-c"><div class="card-icon">⚠️</div><div class="kpi-label">Vencendo em 30 dias</div><div class="kpi-val" style="color:var(--coral)">23 itens</div><div class="kpi-sub">R$ 4.820 em risco</div></div>
+      <div class="card card-teal"><div class="card-icon">🔄</div><div class="kpi-label">Giro de Estoque</div><div class="kpi-val teal">4,2×</div><div class="kpi-sub">ao mês — bom ritmo</div></div>
+    </div>
+    <div class="kpi-grid g3 mt16">
+      <div class="card card-teal"><div class="kpi-label">Cobertura de Estoque</div><div class="kpi-val teal">18 dias</div><div class="kpi-sub">média geral</div><div class="prog-wrap"><div class="prog-labels"><span>Meta 20 dias</span><span>90%</span></div><div class="prog-bar"><div class="prog-fill teal" style="width:90%"></div></div></div></div>
+      <div class="card card-glow-c"><div class="kpi-label">Produtos Vencidos</div><div class="kpi-val" style="color:var(--coral)">8 itens</div><div class="kpi-sub">R$ 1.240 — prejuízo</div><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill coral" style="width:100%"></div></div></div></div>
+      <div class="card card-yellow"><div class="kpi-label">Vencendo 30–90 dias</div><div class="kpi-val yellow">61 itens</div><div class="kpi-sub">R$ 9.480 — atenção</div><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill yellow" style="width:60%"></div></div></div></div>
+    </div>
+    <div class="mt32 sec-head"><span class="sec-title">Alertas Prioritários</span></div>
+    <div class="alert-row danger"><div class="alert-ico">🔴</div><div class="alert-body"><div class="alert-t">Amoxicilina 500mg — Vence em 12 dias</div><div class="alert-d">48 unidades · R$ 672 em risco</div></div><div class="alert-v" style="color:var(--coral)">URGENTE</div></div>
+    <div class="alert-row danger"><div class="alert-ico">🔴</div><div class="alert-body"><div class="alert-t">Dipirona 500mg gotas — Estoque zerado</div><div class="alert-d">Alta rotatividade — reposição imediata</div></div><div class="alert-v" style="color:var(--coral)">0 unid.</div></div>
+    <div class="alert-row warn"><div class="alert-ico">🟡</div><div class="alert-body"><div class="alert-t">Omeprazol 20mg — Estoque mínimo</div><div class="alert-d">12 unidades · mínimo recomendado: 50</div></div><div class="alert-v" style="color:var(--yellow)">12 unid.</div></div>
+    <div class="alert-row warn"><div class="alert-ico">🟡</div><div class="alert-body"><div class="alert-t">Losartana 50mg — Vence em 28 dias</div><div class="alert-d">34 unidades · R$ 510 em risco</div></div><div class="alert-v" style="color:var(--yellow)">28 dias</div></div>
+    <div class="alert-row ok"><div class="alert-ico">🟢</div><div class="alert-body"><div class="alert-t">Metformina 850mg — Estoque adequado</div><div class="alert-d">180 unidades · cobertura 40 dias</div></div><div class="alert-v" style="color:var(--teal)">OK</div></div>
+  </div>
+
+  <!-- CLIENTES -->
+  <div class="page" id="page-clientes">
+    <div class="sec-head"><span class="sec-title">Base de Clientes</span><span class="sec-tag blue">Análise de Perfil</span></div>
+    <div class="kpi-grid g4">
+      <div class="card card-glow-o"><div class="card-icon">👥</div><div class="kpi-label">Atendimentos Hoje</div><div class="kpi-val orange">135</div><div class="kpi-sub"><span class="badge badge-up">▲ 9%</span></div></div>
+      <div class="card card-coral"><div class="card-icon">🆕</div><div class="kpi-label">Clientes Novos</div><div class="kpi-val" style="color:var(--coral)">142</div><div class="kpi-sub">6,2% da base</div></div>
+      <div class="card card-teal"><div class="card-icon">🔁</div><div class="kpi-label">Clientes Recorrentes</div><div class="kpi-val teal">2.142</div><div class="kpi-sub">93,8% das vendas</div></div>
+      <div class="card card-blue"><div class="card-icon">📇</div><div class="kpi-label">Base Ativa Total</div><div class="kpi-val" style="color:var(--blue)">8.430</div><div class="kpi-sub">cadastros ativos</div></div>
+    </div>
+    <div class="kpi-grid g2 mt24">
+      <div class="chart-card"><div class="chart-head"><div class="chart-title">Frequência de Compra</div></div><div class="mini-bar-row mt16"><span class="mini-bar-lbl">1× por mês</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:45%"></div></div><span class="mini-bar-val">45%</span></div><div class="mini-bar-row"><span class="mini-bar-lbl">2× por mês</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:28%"></div></div><span class="mini-bar-val">28%</span></div><div class="mini-bar-row"><span class="mini-bar-lbl">Semanal</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:18%;background:linear-gradient(90deg,var(--teal),var(--blue))"></div></div><span class="mini-bar-val">18%</span></div><div class="mini-bar-row"><span class="mini-bar-lbl">Eventual</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:9%;background:rgba(255,255,255,.15)"></div></div><span class="mini-bar-val">9%</span></div></div>
+      <div class="chart-card"><div class="chart-head"><div class="chart-title">Ticket Médio por Perfil</div></div><div class="mini-bar-row mt16"><span class="mini-bar-lbl">Pac. crônico</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:82%;background:linear-gradient(90deg,var(--coral),var(--orange))"></div></div><span class="mini-bar-val">R$ 120</span></div><div class="mini-bar-row"><span class="mini-bar-lbl">Recorrente</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:54%"></div></div><span class="mini-bar-val">R$ 78</span></div><div class="mini-bar-row"><span class="mini-bar-lbl">Novo</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--blue),var(--purple))"></div></div><span class="mini-bar-val">R$ 52</span></div><div class="mini-bar-row"><span class="mini-bar-lbl">Eventual</span><div class="mini-bar-bg"><div class="mini-bar-fill" style="width:28%;background:rgba(255,255,255,.15)"></div></div><span class="mini-bar-val">R$ 41</span></div></div>
+    </div>
+  </div>
+
+  <!-- FARMÁCIA -->
+  <div class="page" id="page-farmacia">
+    <div class="sec-head"><span class="sec-title">Indicadores Farmacêuticos</span><span class="sec-tag teal">Setor Específico</span></div>
+    <div class="kpi-grid g4">
+      <div class="card card-accent"><div class="card-icon">📋</div><div class="kpi-label">Controlados Vendidos</div><div class="kpi-val">184</div><div class="kpi-sub">Notificações registradas</div></div>
+      <div class="card card-teal"><div class="card-icon">💊</div><div class="kpi-label">Genéricos vs Marca</div><div class="kpi-val teal">63% / 37%</div><div class="kpi-sub">genérico prevalece</div></div>
+      <div class="card card-glow-o"><div class="card-icon">📜</div><div class="kpi-label">Venda c/ Receita</div><div class="kpi-val orange">68%</div><div class="kpi-sub">do total de vendas</div></div>
+      <div class="card card-yellow"><div class="card-icon">🏷️</div><div class="kpi-label">Desconto Médio</div><div class="kpi-val yellow">4,2%</div><div class="kpi-sub">aplicado nas vendas</div></div>
+    </div>
+    <div class="kpi-grid g2 mt24">
+      <div class="chart-card">
+        <div class="chart-head"><div class="chart-title">Genérico vs Referência</div></div>
+        <div class="donut-wrap" style="margin-top:16px">
+          <svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">
+            <defs><linearGradient id="dg1" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#06D6A0"/><stop offset="100%" stop-color="#4EA8FF"/></linearGradient></defs>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="var(--surface2)" stroke-width="18"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="url(#dg1)" stroke-width="18" stroke-dasharray="182 107" stroke-dashoffset="-28" stroke-linecap="round"/>
+            <circle cx="60" cy="60" r="46" fill="none" stroke="rgba(255,107,26,.35)" stroke-width="18" stroke-dasharray="107 182" stroke-dashoffset="154" stroke-linecap="round"/>
+            <text x="60" y="55" text-anchor="middle" font-size="17" font-weight="800" fill="var(--text)" font-family="'Inter',sans-serif">63%</text>
+            <text x="60" y="70" text-anchor="middle" font-size="9" fill="var(--text3)">genérico</text>
+          </svg>
+          <div class="donut-legend">
+            <div class="donut-row"><span class="donut-dot" style="background:var(--teal)"></span>Genérico<span class="donut-pct">63%</span></div>
+            <div class="donut-row"><span class="donut-dot" style="background:rgba(255,107,26,.5)"></span>Referência<span class="donut-pct">37%</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card"><div class="chart-head"><div class="chart-title">Medicamentos de Alto Custo</div></div><table class="tbl"><thead><tr><th>Produto</th><th>Qtd</th><th>Receita</th></tr></thead><tbody><tr><td>Insulina Glargina 100U</td><td>24</td><td style="color:var(--orange2)">R$ 5.280</td></tr><tr><td>Adalimumabe 40mg</td><td>4</td><td style="color:var(--orange2)">R$ 4.800</td></tr><tr><td>Rivaroxabana 20mg</td><td>18</td><td style="color:var(--orange2)">R$ 3.240</td></tr><tr><td>Trastuzumabe 440mg</td><td>2</td><td style="color:var(--orange2)">R$ 6.400</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE -->
+  <div class="page" id="page-performance">
+    <div class="sec-head"><span class="sec-title">Performance Executiva</span><span class="sec-tag">KPIs & Comparativos</span></div>
+    <div class="kpi-grid g3">
+      <div class="card card-glow-t"><div class="kpi-label">Meta de Vendas</div><div class="kpi-val teal">89,1%</div><div class="kpi-sub">R$ 142.600 / R$ 160.000</div><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill teal" style="width:89%"></div></div></div></div>
+      <div class="card card-glow-o"><div class="kpi-label">Crescimento Mensal</div><div class="kpi-val orange">+8,4%</div><div class="kpi-sub">R$ 131.600 → R$ 142.600</div><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" style="width:84%"></div></div></div></div>
+      <div class="card card-yellow"><div class="kpi-label">CMV vs Meta</div><div class="kpi-val yellow">75,2%</div><div class="kpi-sub">Meta: 72% <span class="badge badge-down">acima</span></div><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill coral" style="width:75%"></div></div></div></div>
+    </div>
+    <div class="chart-card mt24">
+      <div class="chart-head"><div class="chart-title">Faturamento — Últimos 6 Meses</div><span class="badge badge-up" style="font-size:11px">▲ Tendência positiva</span></div>
+      <svg viewBox="0 0 640 150" style="width:100%;height:150px" preserveAspectRatio="none">
+        <defs><linearGradient id="bar6" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF8C42"/><stop offset="100%" stop-color="#FF4D6D" stop-opacity=".7"/></linearGradient></defs>
+        <line x1="0" y1="20" x2="640" y2="20" stroke="rgba(255,255,255,.04)" stroke-width="1"/><line x1="0" y1="70" x2="640" y2="70" stroke="rgba(255,255,255,.04)" stroke-width="1"/><line x1="0" y1="120" x2="640" y2="120" stroke="rgba(255,255,255,.04)" stroke-width="1"/>
+        <rect x="20" y="88" width="75" height="52" rx="7" fill="rgba(255,107,26,.2)"/><rect x="125" y="76" width="75" height="64" rx="7" fill="rgba(255,107,26,.3)"/><rect x="230" y="64" width="75" height="76" rx="7" fill="rgba(255,107,26,.45)"/><rect x="335" y="50" width="75" height="90" rx="7" fill="url(#bar6)" opacity=".8"/><rect x="440" y="45" width="75" height="95" rx="7" fill="url(#bar6)"/><rect x="545" y="30" width="75" height="110" rx="7" fill="url(#bar6)" style="filter:drop-shadow(0 0 10px rgba(255,107,26,.5))"/>
+        <text x="57" y="145" font-size="10" text-anchor="middle" fill="var(--text3)">Jan</text><text x="162" y="145" font-size="10" text-anchor="middle" fill="var(--text3)">Fev</text><text x="267" y="145" font-size="10" text-anchor="middle" fill="var(--text3)">Mar</text><text x="372" y="145" font-size="10" text-anchor="middle" fill="var(--text3)">Abr</text><text x="477" y="145" font-size="10" text-anchor="middle" fill="var(--text3)">Mai</text><text x="582" y="145" font-size="10" text-anchor="middle" fill="var(--orange2)" font-weight="bold">Jun ●</text>
+        <text x="57" y="83" font-size="9" text-anchor="middle" fill="var(--text3)">118k</text><text x="162" y="71" font-size="9" text-anchor="middle" fill="var(--text3)">122k</text><text x="267" y="59" font-size="9" text-anchor="middle" fill="var(--text3)">128k</text><text x="372" y="45" font-size="9" text-anchor="middle" fill="var(--text2)">134k</text><text x="477" y="40" font-size="9" text-anchor="middle" fill="var(--text2)">131k</text><text x="582" y="25" font-size="9" text-anchor="middle" fill="var(--orange2)" font-weight="bold">142k</text>
+      </svg>
+    </div>
+    <div class="chart-card mt24">
+      <div class="chart-head"><div class="chart-title">🏅 Ranking de Desempenho</div></div>
+      <div class="kpi-status-row"><div class="ks-icon">🟢</div><div class="ks-name">Faturamento diário</div><div class="ks-val" style="color:var(--teal)">R$ 8.430</div><div class="ks-meta">Meta R$ 8.000</div><span class="pill pill-teal">✅ Atingido</span></div>
+      <div class="kpi-status-row"><div class="ks-icon">🟢</div><div class="ks-name">Ticket médio</div><div class="ks-val" style="color:var(--teal)">R$ 62,40</div><div class="ks-meta">Meta R$ 60,00</div><span class="pill pill-teal">✅ Atingido</span></div>
+      <div class="kpi-status-row"><div class="ks-icon">🟡</div><div class="ks-name">Nº de atendimentos</div><div class="ks-val" style="color:var(--yellow)">135</div><div class="ks-meta">Meta 150</div><span class="pill pill-yellow">⚡ Parcial</span></div>
+      <div class="kpi-status-row"><div class="ks-icon">🟡</div><div class="ks-name">Margem de lucro</div><div class="ks-val" style="color:var(--yellow)">24,8%</div><div class="ks-meta">Meta 26%</div><span class="pill pill-yellow">⚡ Parcial</span></div>
+      <div class="kpi-status-row"><div class="ks-icon">🔴</div><div class="ks-name">CMV</div><div class="ks-val" style="color:var(--coral)">75,2%</div><div class="ks-meta">Meta 72%</div><span class="pill pill-coral">❌ Acima</span></div>
+    </div>
+  </div>
+
+  <!-- INSIGHTS -->
+  <div class="page" id="page-inteligente">
+    <div class="sec-head"><span class="sec-title">Insights Inteligentes</span><span class="sec-tag teal">🧠 IA Analítica</span></div>
+    <div class="chart-card">
+      <div class="chart-head"><div class="chart-title">🔮 Previsão de Vendas — Próximos 7 dias</div></div>
+      <div class="forecast-grid">
+        <div class="fc-chip"><div class="fc-day">SEG</div><div class="fc-val">R$ 7,8k</div></div>
+        <div class="fc-chip"><div class="fc-day">TER</div><div class="fc-val">R$ 8,1k</div></div>
+        <div class="fc-chip"><div class="fc-day">QUA</div><div class="fc-val">R$ 9,2k</div></div>
+        <div class="fc-chip"><div class="fc-day">QUI</div><div class="fc-val">R$ 8,6k</div></div>
+        <div class="fc-chip fc-peak"><div class="fc-day">SEX 🔥</div><div class="fc-val">R$ 10,3k</div></div>
+        <div class="fc-chip fc-peak"><div class="fc-day">SÁB 🔥</div><div class="fc-val">R$ 11,5k</div></div>
+        <div class="fc-chip"><div class="fc-day">DOM</div><div class="fc-val">R$ 6,8k</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:14px">📌 Baseado no histórico dos últimos 90 dias + sazonalidade regional</div>
+    </div>
+    <div class="chart-card mt24">
+      <div class="chart-head"><div class="chart-title">📦 Sugestão de Reposição de Estoque</div><span class="sec-tag teal">IA Automático</span></div>
+      <table class="tbl"><thead><tr><th>Produto</th><th>Estoque Atual</th><th>Giro/dia</th><th>Sugestão</th><th>Prioridade</th></tr></thead><tbody>
+        <tr><td>Dipirona 500mg gotas</td><td>0</td><td>12 un.</td><td>200 unidades</td><td><span class="pill pill-coral">🔴 Urgente</span></td></tr>
+        <tr><td>Omeprazol 20mg</td><td>12</td><td>8 un.</td><td>150 unidades</td><td><span class="pill pill-coral">🔴 Urgente</span></td></tr>
+        <tr><td>Ibuprofeno 600mg</td><td>48</td><td>14 un.</td><td>200 unidades</td><td><span class="pill pill-yellow">🟡 Alta</span></td></tr>
+        <tr><td>Vitamina C 1g</td><td>65</td><td>7 un.</td><td>100 unidades</td><td><span class="pill pill-yellow">🟡 Alta</span></td></tr>
+        <tr><td>Protetor Solar FPS50</td><td>92</td><td>9 un.</td><td>80 unidades</td><td><span class="pill pill-teal">🟢 Normal</span></td></tr>
+      </tbody></table>
+    </div>
+    <div class="mt24 sec-head"><span class="sec-title">Cross-sell — Produtos que Vendem Juntos</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div class="insight-card"><div class="insight-ico">💡</div><div><div class="insight-t">Amoxicilina + Probiótico</div><div class="insight-d">Combinação em 72% das compras com antibiótico</div><div class="insight-v">+R$ 32 / venda</div></div></div>
+      <div class="insight-card"><div class="insight-ico">☀️</div><div><div class="insight-t">Protetor Solar + Hidratante</div><div class="insight-d">Oferecer junto aumenta ticket em 18%</div><div class="insight-v">+R$ 45 / venda</div></div></div>
+      <div class="insight-card"><div class="insight-ico">💊</div><div><div class="insight-t">Metformina + Vitamina B12</div><div class="insight-d">Indicação clínica — sugerir proativamente</div><div class="insight-v">+R$ 28 / venda</div></div></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const pages={financeiro:{title:'Financeiro',sub:'Financeiro'},vendas:{title:'Vendas & Operação',sub:'Vendas & Operação'},estoque:{title:'Estoque',sub:'Estoque'},clientes:{title:'Clientes',sub:'Clientes'},farmacia:{title:'Indicadores Farmacêuticos',sub:'Farmácia'},performance:{title:'Performance',sub:'Performance'},inteligente:{title:'Insights Inteligentes',sub:'Insights IA'}};
+function goPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');const btn=document.querySelector(`[onclick="goPage('${id}')"]`);if(btn)btn.classList.add('active');document.getElementById('pageTitle').textContent=pages[id].title;document.getElementById('pageBread').textContent=pages[id].sub;}
+function tick(){const now=new Date();document.getElementById('clock').textContent=now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});document.getElementById('dateStr').textContent=now.toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'});document.getElementById('monthChip').textContent=now.toLocaleDateString('pt-BR',{month:'long',year:'numeric'});}
+tick();setInterval(tick,1000);
+</script>
+</body>
+</html>

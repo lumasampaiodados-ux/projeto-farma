@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luma Sampaio — Portfólio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080A10;
+  --surface: #0F1220;
+  --surface2: #161A28;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --orange: #FF6B1A;
+  --orange2: #FF8C42;
+  --coral: #FF4D6D;
+  --teal: #06D6A0;
+  --blue: #4EA8FF;
+  --yellow: #FFD166;
+  --purple: #9B72FF;
+  --text: #F0F2FF;
+  --text2: #8B91B0;
+  --text3: #4A5070;
+  --r: 16px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 4px; }
+
+/* BG GRID */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,26,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,26,.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* NAV */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: rgba(8,10,16,.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(20px, 5vw, 80px);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF8C42, #FF4D6D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  text-decoration: none;
+  transition: all .2s;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+.nav-link:hover { color: var(--text); background: rgba(255,255,255,.05); }
+
+.nav-cta {
+  background: linear-gradient(135deg, var(--orange), var(--coral));
+  color: white !important;
+  font-weight: 600 !important;
+  border-radius: 10px;
+  padding: 8px 18px;
+  box-shadow: 0 0 20px rgba(255,107,26,.3);
+  transition: all .3s !important;
+}
+
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 30px rgba(255,107,26,.5) !important; background: rgba(0,0,0,0) !important; }
+
+/* MAIN */
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: 64px;
+}
+
+/* HERO */
+.hero {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  padding: clamp(60px,8vw,120px) clamp(20px,8vw,120px);
+  gap: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(circle, rgba(255,107,26,.12), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -200px; left: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(6,214,160,.08), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-content { flex: 1; max-width: 640px; animation: fadeUp .8s both; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,107,26,.1);
+  border: 1px solid rgba(255,107,26,.25);
+  border-radius: 30px;
+  padding: 5px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--orange2);
+  margin-bottom: 24px;
+}
+
+.live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 8px var(--teal);
+  animation: blink 2s infinite;
+}
+
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+
+.hero h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 6px;
+}
+
+.hero h1 .grad {
+  background: linear-gradient(135deg, #FF8C42, #FF4D6D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-role {
+  font-size: clamp(16px, 2vw, 22px);
+  color: var(--text2);
+  font-weight: 400;
+  margin-bottom: 24px;
+  letter-spacing: 0.3px;
+}
+
+.hero-role strong { color: var(--orange2); font-weight: 600; }
+
+.hero-summary {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 36px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--orange), var(--coral));
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all .3s;
+  box-shadow: 0 0 30px rgba(255,107,26,.3);
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(255,107,26,.5); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface2);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  transition: all .3s;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.btn-secondary:hover { border-color: var(--orange); color: var(--orange2); }
+
+/* Hero stats */
+.hero-stats {
+  display: flex;
+  gap: 24px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.stat { text-align: center; }
+
+.stat-val {
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--orange2), var(--coral));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+/* Hero visual side */
+.hero-visual {
+  flex-shrink: 0;
+  animation: fadeUp .8s .2s both;
+}
+
+.avatar-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  width: 280px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 60px rgba(255,107,26,.08);
+}
+
+.avatar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--coral), var(--purple));
+}
+
+.avatar-circle {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--coral));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: white;
+  margin: 0 auto 16px;
+  box-shadow: 0 0 30px rgba(255,107,26,.35);
+}
+
+.avatar-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.avatar-title {
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--surface2);
+  margin-bottom: 6px;
+  font-size: 11px;
+  color: var(--text2);
+  border: 1px solid var(--border);
+}
+
+.contact-item span:first-child { font-size: 14px; }
+
+/* SECTION */
+section {
+  padding: clamp(60px,8vw,100px) clamp(20px,8vw,120px);
+  position: relative;
+}
+
+section + section { border-top: 1px solid var(--border); }
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--orange2);
+  margin-bottom: 16px;
+}
+
+.section-eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 2px;
+  background: var(--orange);
+  border-radius: 2px;
+}
+
+.section-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.section-sub {
+  font-size: 15px;
+  color: var(--text2);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+
+/* SKILLS GRID */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.skill-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,.02), transparent);
+  pointer-events: none;
+}
+
+.skill-card:hover {
+  border-color: rgba(255,107,26,.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(255,107,26,.1);
+}
+
+.skill-icon {
+  font-size: 28px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.skill-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.skill-desc {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.5;
+}
+
+/* TOOLS */
+.tools-section {
+  margin-bottom: 48px;
+}
+
+.tools-group { margin-bottom: 24px; }
+
+.tools-group-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tools-group-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.tools-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tool-chip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  transition: all .2s;
+}
+
+.tool-chip:hover {
+  border-color: var(--orange);
+  color: var(--orange2);
+  background: rgba(255,107,26,.06);
+}
+
+.tool-chip.highlight {
+  background: rgba(255,107,26,.1);
+  border-color: rgba(255,107,26,.3);
+  color: var(--orange2);
+}
+
+/* EXPERIENCE TIMELINE */
+.timeline { position: relative; padding-left: 28px; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--orange), var(--coral), transparent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 36px;
+  animation: fadeUp .5s both;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 8px;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 12px rgba(255,107,26,.5);
+  border: 2px solid var(--bg);
+}
+
+.timeline-item:first-child::before { background: var(--teal); box-shadow: 0 0 12px rgba(6,214,160,.5); }
+
+.exp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 22px 24px;
+  transition: all .25s;
+}
+
+.exp-card:hover {
+  border-color: rgba(255,107,26,.2);
+  box-shadow: 0 4px 30px rgba(0,0,0,.3);
+}
+
+.exp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.exp-company {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.exp-period {
+  background: rgba(255,107,26,.1);
+  border: 1px solid rgba(255,107,26,.2);
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--orange2);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.exp-role {
+  font-size: 12px;
+  color: var(--teal);
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+}
+
+.exp-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.exp-tag {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 500;
+}
+
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.exp-bullets li {
+  font-size: 13px;
+  color: var(--text2);
+  padding-left: 14px;
+  position: relative;
+}
+
+.exp-bullets li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-size: 10px;
+  top: 2px;
+}
+
+/* DIFFERENTIALS */
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.diff-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px;
+  text-align: center;
+  transition: all .25s;
+  position: relative;
+  overflow: hidden;
+}
+
+.diff-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--orange), transparent);
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.diff-card:hover::before { opacity: 1; }
+.diff-card:hover { border-color: rgba(255,107,26,.25); transform: translateY(-3px); }
+
+.diff-icon { font-size: 28px; margin-bottom: 10px; }
+.diff-label { font-size: 12px; font-weight: 600; color: var(--text2); line-height: 1.4; }
+
+/* PROJECTS SECTION */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px;
+  text-decoration: none;
+  color: var(--text);
+  display: block;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.project-card.pharma::before { background: linear-gradient(90deg, var(--orange), var(--coral)); opacity: 1; }
+.project-card.future::before { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+
+.project-card.pharma:hover { border-color: rgba(255,107,26,.3); box-shadow: 0 20px 60px rgba(255,107,26,.15); }
+.project-card.future:hover { border-color: rgba(6,214,160,.2); }
+.project-card.future::before { opacity: 0; transition: opacity .3s; }
+.project-card.future:hover::before { opacity: 1; }
+
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.project-icon { font-size: 32px; }
+
+.project-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.badge-live { background: rgba(255,107,26,.15); color: var(--orange2); border: 1px solid rgba(255,107,26,.25); }
+.badge-soon { background: rgba(6,214,160,.1); color: var(--teal); border: 1px solid rgba(6,214,160,.2); }
+
+.project-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.ptag {
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 500;
+}
+
+.project-arrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--orange2);
+  transition: gap .2s;
+}
+
+.project-card.future .project-arrow { color: var(--text3); }
+.project-card:hover .project-arrow { gap: 10px; }
+
+/* FOOTER SECTION */
+.footer-section {
+  padding: clamp(40px,6vw,80px) clamp(20px,8vw,120px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: gap;
+  gap: 20px;
+}
+
+.footer-logo {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF8C42, #FF4D6D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.footer-note { font-size: 12px; color: var(--text3); }
+
+.footer-links {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-link {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  text-decoration: none;
+  transition: all .2s;
+}
+
+.footer-link:hover { border-color: var(--orange); color: var(--orange2); }
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in { animation: fadeUp .6s both; }
+.delay-1 { animation-delay: .1s; }
+.delay-2 { animation-delay: .2s; }
+.delay-3 { animation-delay: .3s; }
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .hero { flex-direction: column; padding: 40px 20px; min-height: auto; }
+  .hero-visual { order: -1; }
+  .avatar-card { width: 100%; max-width: 300px; }
+  .nav-links { display: none; }
+  .footer-section { flex-direction: column; text-align: center; }
+  .footer-links { justify-content: center; }
+  .hero-stats { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">LS</a>
+  <div class="nav-links">
+    <a href="#sobre" class="nav-link">Sobre</a>
+    <a href="#habilidades" class="nav-link">Habilidades</a>
+    <a href="#experiencia" class="nav-link">Experiência</a>
+    <a href="#projetos" class="nav-link">Projetos</a>
+    <a href="mailto:luhtense@hotmail.com" class="nav-link nav-cta">Contato</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero" id="sobre">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="live-dot"></span>
+        Disponível para novas oportunidades
+      </div>
+
+      <h1>
+        Luma<br>
+        <span class="grad">Sampaio</span>
+      </h1>
+
+      <p class="hero-role">
+        <strong>Analista de Dados</strong> · Power BI · SQL · Automação
+      </p>
+
+      <p class="hero-summary">
+        Combino Business Intelligence, compliance e segurança da informação para transformar dados complexos em indicadores claros para decisão executiva. Sólida vivência no setor financeiro e meios de pagamento, incluindo ambientes regulados por PCI DSS.
+      </p>
+
+      <div class="hero-cta">
+        <a href="#projetos" class="btn-primary">Ver Projetos →</a>
+        <a href="mailto:luhtense@hotmail.com" class="btn-secondary">📧 Entrar em Contato</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-val">10+</div>
+          <div class="stat-label">Anos de Exp.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">3</div>
+          <div class="stat-label">Setores</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">PCI</div>
+          <div class="stat-label">DSS Certified</div>
+        </div>
+        <div class="stat">
+          <div class="stat-val">SP</div>
+          <div class="stat-label">São Paulo</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="avatar-card">
+        <div class="avatar-circle">LS</div>
+        <div class="avatar-name">Luma Sampaio</div>
+        <div class="avatar-title">Analista de Dados · 33 anos</div>
+
+        <div class="contact-item">
+          <span>📧</span> luhtense@hotmail.com
+        </div>
+        <div class="contact-item">
+          <span>📱</span> (11) 98018-4975
+        </div>
+        <div class="contact-item">
+          <span>📍</span> São Paulo · SP
+        </div>
+        <div class="contact-item">
+          <span>🌐</span> www.grandesite.com.br
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HABILIDADES -->
+  <section id="habilidades">
+    <div class="section-eyebrow">Competências</div>
+    <h2 class="section-title">Habilidades & Ferramentas</h2>
+    <p class="section-sub">Stack técnica construída na prática, em ambientes regulados e de alta exigência.</p>
+
+    <div class="skills-grid">
+      <div class="skill-card fade-in">
+        <span class="skill-icon">📊</span>
+        <div class="skill-name">BI & Dashboards</div>
+        <div class="skill-desc">Construção de painéis executivos em Power BI (DAX) e Qlik Sense com KPIs financeiros, operacionais e de segurança.</div>
+      </div>
+      <div class="skill-card fade-in delay-1">
+        <span class="skill-icon">🗄️</span>
+        <div class="skill-name">Dados & SQL</div>
+        <div class="skill-desc">Modelagem, manipulação e análise de dados com SQL, DBeaver, Pentaho e Power Query.</div>
+      </div>
+      <div class="skill-card fade-in delay-2">
+        <span class="skill-icon">⚙️</span>
+        <div class="skill-name">Automação</div>
+        <div class="skill-desc">Python (Pandas), Power Automate, Google Apps Script e integração com APIs para otimização de processos.</div>
+      </div>
+      <div class="skill-card fade-in delay-3">
+        <span class="skill-icon">🔐</span>
+        <div class="skill-name">Compliance & Risco</div>
+        <div class="skill-desc">Suporte e implementação de PCI DSS, LGPD, gestão de acessos e governança da informação.</div>
+      </div>
+    </div>
+
+    <!-- Tools -->
+    <div class="tools-section">
+      <div class="tools-group">
+        <div class="tools-group-title">BI & Dados</div>
+        <div class="tools-chips">
+          <span class="tool-chip highlight">Power BI</span>
+          <span class="tool-chip highlight">DAX</span>
+          <span class="tool-chip">SQL</span>
+          <span class="tool-chip">Qlik Sense</span>
+          <span class="tool-chip">Excel Avançado</span>
+          <span class="tool-chip">Power Query</span>
+        </div>
+      </div>
+      <div class="tools-group">
+        <div class="tools-group-title">Automação & Engenharia</div>
+        <div class="tools-chips">
+          <span class="tool-chip highlight">Python (Pandas)</span>
+          <span class="tool-chip">Power Automate</span>
+          <span class="tool-chip">Google Apps Script</span>
+          <span class="tool-chip">Pentaho</span>
+          <span class="tool-chip">DBeaver</span>
+          <span class="tool-chip">APIs REST</span>
+        </div>
+      </div>
+      <div class="tools-group">
+        <div class="tools-group-title">Corporativo & Projetos</div>
+        <div class="tools-chips">
+          <span class="tool-chip">Microsoft 365</span>
+          <span class="tool-chip">SharePoint</span>
+          <span class="tool-chip">MS Project</span>
+          <span class="tool-chip">Bizagi</span>
+          <span class="tool-chip">Metodologias Ágeis</span>
+          <span class="tool-chip">Google Workspace</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diferenciais -->
+    <div class="section-eyebrow" style="margin-top:0">Diferenciais</div>
+    <div class="diff-grid" style="margin-top:16px">
+      <div class="diff-card">
+        <div class="diff-icon">💳</div>
+        <div class="diff-label">Setor Financeiro & Meios de Pagamento</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🔒</div>
+        <div class="diff-label">Vivência com PCI DSS e Ambientes Regulados</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🔗</div>
+        <div class="diff-label">Integração entre Dados, Risco e Negócio</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🧠</div>
+        <div class="diff-label">Perfil Analítico com Visão Estratégica</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">📈</div>
+        <div class="diff-label">KPIs Executivos e Insights Acionáveis</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIÊNCIA -->
+  <section id="experiencia">
+    <div class="section-eyebrow">Trajetória</div>
+    <h2 class="section-title">Experiência Profissional</h2>
+    <p class="section-sub">Carreira construída de forma progressiva — da operação para dados e estratégia.</p>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-company">Fastpay</div>
+            <div class="exp-period">2023 – Atual</div>
+          </div>
+          <div class="exp-role">Analista de Dados · Compliance · Projetos</div>
+          <ul class="exp-bullets">
+            <li>Desenvolvimento de dashboards executivos (Power BI, Qlik Sense)</li>
+            <li>Análise de dados de segurança da informação e gestão de acessos</li>
+            <li>Construção de KPIs financeiros, operacionais e de produção</li>
+            <li>Modelagem e manipulação de dados com SQL</li>
+            <li>Suporte à conformidade com PCI DSS e geração de insights estratégicos</li>
+            <li>Implementação de controles PCI DSS e campanhas de conscientização</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Power BI</span>
+            <span class="exp-tag">Qlik Sense</span>
+            <span class="exp-tag">SQL</span>
+            <span class="exp-tag">PCI DSS</span>
+            <span class="exp-tag">PMO</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-company">Banco Digimais</div>
+            <div class="exp-period">2022 – 2023</div>
+          </div>
+          <div class="exp-role">Analista de Produtos e Negócios Pleno</div>
+          <ul class="exp-bullets">
+            <li>Análise de mercado, concorrência e viabilidade de produtos</li>
+            <li>Levantamento de requisitos e definição de escopo</li>
+            <li>Gestão de stakeholders e implantação de produtos</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Produto</span>
+            <span class="exp-tag">Negócios</span>
+            <span class="exp-tag">Fintech</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-company">Infracommerce</div>
+            <div class="exp-period">2018 – 2022</div>
+          </div>
+          <div class="exp-role">Analista de Projetos, Qualidade e Implantações</div>
+          <ul class="exp-bullets">
+            <li>Gestão de projetos de implantação e qualidade</li>
+            <li>Backoffice B2B e treinamento de equipes</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Projetos</span>
+            <span class="exp-tag">Qualidade</span>
+            <span class="exp-tag">E-commerce</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div class="exp-company">Sercom</div>
+            <div class="exp-period">2014 – 2018</div>
+          </div>
+          <div class="exp-role">Analista de Atendimento ao Cliente</div>
+          <ul class="exp-bullets">
+            <li>Atendimento e suporte ao cliente — início da carreira na operação</li>
+          </ul>
+          <div class="exp-tags">
+            <span class="exp-tag">Atendimento</span>
+            <span class="exp-tag">Operação</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Formação -->
+    <div style="margin-top:48px">
+      <div class="section-eyebrow">Formação</div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:16px">
+        <div class="exp-card" style="flex:1;min-width:240px">
+          <div style="font-size:20px;margin-bottom:8px">🎓</div>
+          <div class="exp-company" style="font-size:14px">Análise e Desenvolvimento de Sistemas (ADS)</div>
+          <div class="exp-role" style="margin-top:4px;margin-bottom:0">Em andamento</div>
+        </div>
+        <div class="exp-card" style="flex:1;min-width:240px">
+          <div style="font-size:20px;margin-bottom:8px">📚</div>
+          <div class="exp-company" style="font-size:14px">Cursos Complementares</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.7">
+            Power BI Avançado · Excel Avançado<br>LGPD – Lei Geral de Proteção de Dados
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJETOS -->
+  <section id="projetos">
+    <div class="section-eyebrow">Trabalhos</div>
+    <h2 class="section-title">Projetos & Dashboards</h2>
+    <p class="section-sub">Painéis executivos desenvolvidos com foco em tomada de decisão rápida e insights estratégicos.</p>
+
+    <div class="projects-grid">
+
+      <!-- LumaFarma -->
+      <a href="dashboard-lumafarma.html" class="project-card pharma">
+        <div class="project-header">
+          <span class="project-icon">💊</span>
+          <span class="project-badge badge-live">● Ao vivo</span>
+        </div>
+        <div class="project-title">Dashboard LumaFarma</div>
+        <div class="project-desc">
+          Painel executivo completo para gestão de farmácia. Financeiro, vendas, estoque crítico, indicadores farmacêuticos e insights por IA em 7 módulos navegáveis.
+        </div>
+        <div class="project-tags">
+          <span class="ptag">Financeiro</span>
+          <span class="ptag">Estoque</span>
+          <span class="ptag">KPIs</span>
+          <span class="ptag">Alertas</span>
+          <span class="ptag">Forecast IA</span>
+        </div>
+        <div class="project-arrow">
+          Abrir Dashboard <span>→</span>
+        </div>
+      </a>
+
+      <!-- Futuro 1 -->
+      <div class="project-card future" style="cursor:default">
+        <div class="project-header">
+          <span class="project-icon">🏦</span>
+          <span class="project-badge badge-soon">Em breve</span>
+        </div>
+        <div class="project-title">Dashboard Financeiro</div>
+        <div class="project-desc">
+          Painel de indicadores financeiros para o setor de meios de pagamento. KPIs de transações, chargeback, compliance e risco operacional.
+        </div>
+        <div class="project-tags">
+          <span class="ptag">Meios de Pagamento</span>
+          <span class="ptag">Risco</span>
+          <span class="ptag">PCI DSS</span>
+        </div>
+        <div class="project-arrow" style="color:var(--text3)">
+          Em desenvolvimento
+        </div>
+      </div>
+
+      <!-- Futuro 2 -->
+      <div class="project-card future" style="cursor:default">
+        <div class="project-header">
+          <span class="project-icon">🔐</span>
+          <span class="project-badge badge-soon">Em breve</span>
+        </div>
+        <div class="project-title">Dashboard Segurança</div>
+        <div class="project-desc">
+          Painel de segurança da informação e acessos. Monitoramento de incidentes, usuários, acessos críticos e conformidade regulatória.
+        </div>
+        <div class="project-tags">
+          <span class="ptag">Segurança da Info.</span>
+          <span class="ptag">Compliance</span>
+          <span class="ptag">LGPD</span>
+        </div>
+        <div class="project-arrow" style="color:var(--text3)">
+          Em desenvolvimento
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer-section">
+    <div>
+      <div class="footer-logo">Luma Sampaio</div>
+      <div class="footer-note" style="margin-top:6px">Analista de Dados · São Paulo – SP</div>
+    </div>
+    <div class="footer-links">
+      <a href="mailto:luhtense@hotmail.com" class="footer-link">📧 Email</a>
+      <a href="tel:11980184975" class="footer-link">📱 Telefone</a>
+      <a href="index.html" class="footer-link">← Voltar</a>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+// Animate elements on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.opacity = '1';
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.timeline-item, .skill-card, .diff-card, .project-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity .5s ease, transform .5s ease';
+  observer.observe(el);
+});
+</script>
+
+</body>
+</html>
