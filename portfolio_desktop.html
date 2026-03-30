@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luma Sampaio — Portfólio Desktop</title>
+
+<!-- 🔤 Fonte padrão Inter — consistente em todo o projeto -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════
+   🎨 DESIGN TOKENS
+══════════════════════════════════ */
+:root {
+  --bg: #080A10; --surface: #0F1220; --surface2: #161A28;
+  --border: rgba(255,255,255,.07); --border2: rgba(255,255,255,.13);
+  --orange: #FF6B1A; --orange2: #FF8C42; --coral: #FF4D6D;
+  --teal: #06D6A0; --blue: #4EA8FF; --yellow: #FFD166; --purple: #9B72FF;
+  --text: #F0F2FF; --text2: #8B91B0; --text3: #4A5070; --r: 14px;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; }
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--surface); }
+::-webkit-scrollbar-thumb { background:var(--orange); border-radius:4px; }
+
+/* ─── FUNDO ─── */
+.bg-grid {
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    linear-gradient(rgba(255,107,26,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,107,26,.03) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+
+/* ─── NAV ─── */
+.nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  background:rgba(8,10,16,.88); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:0 clamp(20px,5vw,80px); height:64px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.nav-logo {
+  font-size:17px; font-weight:800;
+  background:linear-gradient(135deg,#FF8C42,#FF4D6D);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; text-decoration:none;
+}
+.nav-links { display:flex; align-items:center; gap:4px; }
+.nav-link {
+  padding:8px 14px; border-radius:8px; font-size:13px; font-weight:500;
+  color:var(--text2); text-decoration:none; transition:all .2s;
+  border:none; background:none; font-family:inherit; cursor:pointer;
+}
+.nav-link:hover { color:var(--text); background:rgba(255,255,255,.05); }
+.nav-cta {
+  background:linear-gradient(135deg,var(--orange),var(--coral));
+  color:white !important; font-weight:700 !important;
+  border-radius:10px; padding:8px 18px !important;
+  box-shadow:0 0 20px rgba(255,107,26,.3);
+}
+.nav-cta:hover { transform:translateY(-1px); box-shadow:0 4px 30px rgba(255,107,26,.5) !important; }
+
+/* ─── AVISO GLOBAL ─── */
+.disclaimer-bar {
+  background:rgba(255,209,102,.05);
+  border-bottom:1px solid rgba(255,209,102,.12);
+  padding:8px clamp(20px,8vw,120px);
+  font-size:11.5px; color:#A89060; line-height:1.5;
+}
+.disclaimer-bar strong { color:#FFD166; }
+
+/* ─── MAIN ─── */
+main { position:relative; z-index:1; padding-top:64px; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height:calc(100vh - 64px - 36px);
+  display:flex; align-items:center;
+  padding:clamp(60px,8vw,100px) clamp(20px,8vw,120px);
+  gap:60px; position:relative; overflow:hidden;
+}
+.hero::before {
+  content:''; position:absolute; top:-200px; right:-200px;
+  width:700px; height:700px;
+  background:radial-gradient(circle,rgba(255,107,26,.1),transparent 70%);
+  border-radius:50%; pointer-events:none;
+}
+.hero-content { flex:1; max-width:640px; animation:fadeUp .8s both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+.eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(255,107,26,.1); border:1px solid rgba(255,107,26,.25);
+  border-radius:30px; padding:5px 14px;
+  font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  color:var(--orange2); margin-bottom:22px;
+}
+.live-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--teal); box-shadow:0 0 8px var(--teal);
+  animation:blink 2s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.hero h1 {
+  font-size:clamp(38px,5vw,62px); font-weight:900;
+  line-height:1.02; letter-spacing:-2px; margin-bottom:8px;
+}
+.hero h1 .grad {
+  background:linear-gradient(135deg,#FF8C42,#FF4D6D);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.hero-role { font-size:clamp(14px,2vw,18px); color:var(--text2); font-weight:400; margin-bottom:10px; }
+.hero-role strong { color:var(--orange2); font-weight:700; }
+
+/* 🌟 Badge Power BI Avançado — destaque no hero */
+.pbi-badge {
+  display:inline-flex; align-items:center; gap:7px;
+  background:rgba(255,107,26,.12); border:1px solid rgba(255,107,26,.3);
+  border-radius:8px; padding:6px 14px;
+  font-size:12px; font-weight:700; color:var(--orange2); margin-bottom:18px;
+}
+
+.hero-summary { font-size:14px; color:var(--text2); line-height:1.8; max-width:520px; margin-bottom:28px; }
+
+/* ─── BOTÕES DO HERO ─── */
+.hero-cta { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px; }
+.btn-primary {
+  display:inline-flex; align-items:center; gap:8px;
+  background:linear-gradient(135deg,var(--orange),var(--coral));
+  color:white; font-weight:700; font-size:14px; font-family:inherit;
+  padding:13px 26px; border-radius:12px; text-decoration:none;
+  box-shadow:0 0 30px rgba(255,107,26,.3); transition:all .3s; border:none; cursor:pointer;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 40px rgba(255,107,26,.5); }
+.btn-secondary {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--surface2); color:var(--text); font-weight:600; font-size:14px; font-family:inherit;
+  padding:13px 26px; border-radius:12px; text-decoration:none;
+  border:1px solid var(--border2); transition:all .3s; cursor:pointer;
+}
+.btn-secondary:hover { border-color:var(--orange); color:var(--orange2); }
+
+/* 📥 Botão currículo — verde teal para diferenciar */
+.btn-cv {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(6,214,160,.1); border:1px solid rgba(6,214,160,.3);
+  color:var(--teal); font-weight:700; font-size:13px; font-family:inherit;
+  padding:12px 22px; border-radius:12px; text-decoration:none; transition:all .3s; cursor:pointer;
+}
+.btn-cv:hover { background:rgba(6,214,160,.18); transform:translateY(-2px); box-shadow:0 6px 24px rgba(6,214,160,.2); }
+
+/* ─── STATS ─── */
+.hero-stats {
+  display:flex; gap:24px; padding-top:24px;
+  border-top:1px solid var(--border); flex-wrap:wrap;
+}
+.stat-val {
+  font-size:26px; font-weight:900;
+  background:linear-gradient(135deg,var(--orange2),var(--coral));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; line-height:1;
+}
+.stat-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text3); margin-top:4px; }
+
+/* ─── CARD AVATAR (coluna direita do hero) ─── */
+.hero-visual { flex-shrink:0; animation:fadeUp .8s .2s both; }
+.avatar-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:20px; padding:26px; width:280px;
+  position:relative; overflow:hidden;
+  box-shadow:0 0 60px rgba(255,107,26,.07);
+}
+.avatar-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--orange),var(--coral),var(--purple));
+}
+
+/* 🖼️ Foto com moldura discreta */
+.avatar-photo-wrap {
+  width:82px; height:82px; border-radius:50%;
+  border:2px solid rgba(255,107,26,.28);
+  padding:2px; margin:0 auto 14px;
+}
+.avatar-photo {
+  width:100%; height:100%; border-radius:50%;
+  object-fit:cover; display:block;
+  border:2px solid var(--bg);
+}
+.avatar-fallback {
+  display:none; width:78px; height:78px; border-radius:50%;
+  background:linear-gradient(135deg,var(--orange),var(--coral));
+  align-items:center; justify-content:center;
+  font-size:22px; font-weight:800; color:white; border:2px solid var(--bg);
+}
+.avatar-name { font-size:17px; font-weight:800; text-align:center; margin-bottom:3px; }
+.avatar-title { font-size:11px; color:var(--text3); text-align:center; margin-bottom:4px; }
+.avatar-pbi {
+  font-size:10px; font-weight:700; color:var(--orange2); text-align:center;
+  margin-bottom:16px;
+  background:rgba(255,107,26,.08); border:1px solid rgba(255,107,26,.2);
+  border-radius:6px; padding:3px 10px; display:inline-block; width:100%;
+}
+.contact-link {
+  display:flex; align-items:center; gap:10px;
+  padding:7px 10px; border-radius:8px;
+  background:var(--surface2); margin-bottom:5px;
+  font-size:11px; color:var(--text2);
+  border:1px solid var(--border); text-decoration:none; transition:all .2s;
+}
+.contact-link:hover { border-color:rgba(255,107,26,.25); color:var(--orange2); }
+
+/* Botão CV dentro do card */
+.cv-card-btn {
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  width:100%; margin-top:10px; padding:9px;
+  background:linear-gradient(135deg,var(--orange),var(--coral));
+  color:white; font-weight:700; font-size:12px; font-family:inherit;
+  border-radius:10px; text-decoration:none; transition:all .2s;
+  box-shadow:0 0 18px rgba(255,107,26,.25);
+}
+.cv-card-btn:hover { transform:translateY(-1px); box-shadow:0 6px 24px rgba(255,107,26,.4); }
+
+/* ─── SECTIONS ─── */
+section { padding:clamp(60px,8vw,100px) clamp(20px,8vw,120px); position:relative; }
+section + section { border-top:1px solid var(--border); }
+.sec-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--orange2); margin-bottom:14px;
+}
+.sec-eyebrow::before { content:''; width:18px; height:2px; background:var(--orange); border-radius:2px; }
+.sec-title { font-size:clamp(24px,3.5vw,38px); font-weight:900; letter-spacing:-1px; margin-bottom:10px; line-height:1.1; }
+.sec-sub { font-size:14px; color:var(--text2); max-width:500px; line-height:1.7; margin-bottom:44px; }
+
+/* ─── POWER BI DESTAQUE ─── */
+.pbi-featured {
+  background:linear-gradient(135deg,rgba(255,107,26,.1),rgba(255,77,109,.05));
+  border:1px solid rgba(255,107,26,.25);
+  border-left:4px solid var(--orange);
+  border-radius:16px; padding:24px 28px; margin-bottom:32px;
+  display:flex; align-items:flex-start; gap:24px; flex-wrap:wrap;
+}
+.pbi-icon-big { font-size:44px; flex-shrink:0; }
+.pbi-text h3 { font-size:20px; font-weight:800; color:var(--orange2); margin-bottom:6px; }
+.pbi-text p { font-size:13px; color:var(--text2); line-height:1.6; max-width:500px; }
+.pbi-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+.pbi-tag {
+  background:rgba(255,107,26,.12); border:1px solid rgba(255,107,26,.25);
+  border-radius:6px; padding:4px 10px; font-size:11px; font-weight:700; color:var(--orange2);
+}
+
+/* ─── SKILLS GRID ─── */
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-bottom:40px; }
+.skill-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r); padding:20px; transition:all .25s;
+}
+.skill-card:hover { border-color:rgba(255,107,26,.3); transform:translateY(-3px); box-shadow:0 10px 36px rgba(255,107,26,.08); }
+.skill-icon { font-size:26px; margin-bottom:10px; display:block; }
+.skill-name { font-size:14px; font-weight:700; margin-bottom:5px; }
+.skill-desc { font-size:12px; color:var(--text3); line-height:1.5; }
+
+/* Grupos de ferramentas */
+.tools-group { margin-bottom:22px; }
+.tools-group-title {
+  font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  color:var(--text3); margin-bottom:9px; display:flex; align-items:center; gap:8px;
+}
+.tools-group-title::after { content:''; flex:1; height:1px; background:var(--border); }
+.chips-row { display:flex; flex-wrap:wrap; gap:7px; }
+.chip-t {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:7px; padding:5px 12px; font-size:11px; font-weight:600;
+  color:var(--text2); transition:all .2s;
+}
+.chip-t:hover { border-color:var(--orange); color:var(--orange2); background:rgba(255,107,26,.06); }
+.chip-t.hi { background:rgba(255,107,26,.1); border-color:rgba(255,107,26,.25); color:var(--orange2); }
+.chip-t.tl { background:rgba(6,214,160,.08); border-color:rgba(6,214,160,.2); color:var(--teal); }
+
+/* Diferenciais */
+.diff-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; }
+.diff-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r); padding:18px; text-align:center;
+  transition:all .25s; position:relative; overflow:hidden;
+}
+.diff-card::before {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,var(--orange),transparent);
+  opacity:0; transition:opacity .3s;
+}
+.diff-card:hover::before { opacity:1; }
+.diff-card:hover { border-color:rgba(255,107,26,.22); transform:translateY(-3px); }
+.diff-icon { font-size:26px; margin-bottom:9px; }
+.diff-label { font-size:11px; font-weight:600; color:var(--text2); line-height:1.4; }
+
+/* ─── TIMELINE DE EXPERIÊNCIA ─── */
+.timeline { position:relative; padding-left:28px; }
+.timeline::before {
+  content:''; position:absolute; left:8px; top:8px; bottom:8px;
+  width:2px; background:linear-gradient(180deg,var(--orange),var(--coral),transparent);
+}
+.tl-item { position:relative; margin-bottom:28px; }
+.tl-item::before {
+  content:''; position:absolute; left:-24px; top:12px;
+  width:11px; height:11px; border-radius:50%;
+  background:var(--orange); box-shadow:0 0 10px rgba(255,107,26,.5); border:2px solid var(--bg);
+}
+.tl-item:first-child::before { background:var(--teal); box-shadow:0 0 10px rgba(6,214,160,.5); }
+
+.exp-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r); padding:22px 24px; transition:all .25s;
+}
+.exp-card:hover { border-color:rgba(255,107,26,.18); box-shadow:0 4px 28px rgba(0,0,0,.3); }
+
+/* Cabeçalho da empresa */
+.exp-company-header {
+  display:flex; align-items:flex-start; justify-content:space-between;
+  gap:12px; margin-bottom:14px; flex-wrap:wrap;
+}
+.exp-company-name { font-size:17px; font-weight:800; color:var(--text); }
+.exp-period {
+  background:rgba(255,107,26,.1); border:1px solid rgba(255,107,26,.2);
+  border-radius:6px; padding:3px 10px; font-size:9px; font-weight:700;
+  color:var(--orange2); white-space:nowrap; flex-shrink:0;
+}
+
+/* Bloco de cargo dentro da empresa */
+.cargo-block { margin-bottom:16px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+.cargo-block:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+.cargo-title {
+  font-size:13px; font-weight:700; color:var(--teal);
+  margin-bottom:8px; display:flex; align-items:center; gap:6px;
+}
+.cargo-title::before { content:''; width:3px; height:12px; background:var(--teal); border-radius:2px; flex-shrink:0; }
+.cargo-bullets { list-style:none; display:flex; flex-direction:column; gap:5px; }
+.cargo-bullets li {
+  font-size:12px; color:var(--text2); padding-left:14px;
+  position:relative; line-height:1.5;
+}
+.cargo-bullets li::before { content:'▸'; position:absolute; left:0; color:var(--orange); font-size:9px; top:2px; }
+
+.exp-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
+.exp-tag {
+  background:rgba(255,255,255,.04); border:1px solid var(--border);
+  border-radius:5px; padding:2px 8px; font-size:10px; color:var(--text3);
+}
+
+/* ─── PROJETOS ─── */
+.data-notice {
+  display:flex; align-items:center; gap:10px;
+  background:rgba(255,209,102,.05); border:1px solid rgba(255,209,102,.15);
+  border-radius:10px; padding:12px 16px; margin-bottom:24px;
+  font-size:12px; color:#A89060; line-height:1.5;
+}
+.data-notice strong { color:#FFD166; }
+.projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:18px; }
+.proj-card {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--r); padding:24px; text-decoration:none; color:var(--text);
+  display:block; transition:all .3s; position:relative; overflow:hidden;
+}
+.proj-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--orange),var(--coral)); }
+.proj-card:hover { transform:translateY(-5px); border-color:rgba(255,107,26,.3); box-shadow:0 20px 60px rgba(255,107,26,.13); }
+.proj-head { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+.proj-ico { font-size:30px; }
+.proj-badge { font-size:9px; font-weight:700; padding:3px 9px; border-radius:20px; background:rgba(255,107,26,.15); color:var(--orange2); border:1px solid rgba(255,107,26,.25); }
+.proj-title { font-size:18px; font-weight:800; margin-bottom:5px; }
+.proj-desc { font-size:13px; color:var(--text2); line-height:1.6; margin-bottom:14px; }
+.proj-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:16px; }
+.pt { background:rgba(255,255,255,.04); border:1px solid var(--border); border-radius:5px; padding:3px 8px; font-size:10px; color:var(--text3); }
+.proj-arrow { font-size:13px; font-weight:700; color:var(--orange2); }
+.proj-fictional { font-size:10px; color:var(--text3); font-style:italic; margin-top:5px; }
+
+/* ─── FOOTER ─── */
+.footer-sec {
+  padding:clamp(36px,5vw,64px) clamp(20px,8vw,120px);
+  border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  flex-wrap:wrap; gap:16px;
+}
+.footer-logo { font-size:18px; font-weight:800; background:linear-gradient(135deg,#FF8C42,#FF4D6D); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.footer-note { font-size:11px; color:var(--text3); }
+.footer-links { display:flex; gap:8px; flex-wrap:wrap; }
+.footer-link {
+  background:var(--surface2); border:1px solid var(--border);
+  border-radius:8px; padding:7px 13px; font-size:11px; font-weight:600;
+  color:var(--text2); text-decoration:none; transition:all .2s;
+}
+.footer-link:hover { border-color:var(--orange); color:var(--orange2); }
+
+/* ─── RESPONSIVO ─── */
+@media (max-width:768px) {
+  .hero { flex-direction:column; padding:40px 20px; min-height:auto; }
+  .hero-visual { order:-1; }
+  .avatar-card { width:100%; max-width:300px; }
+  .nav-links { display:none; }
+  .footer-sec { flex-direction:column; text-align:center; }
+  .footer-links { justify-content:center; }
+  .pbi-featured { flex-direction:column; }
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<!-- ⚠️ Aviso de dados fictícios — barra no topo -->
+<div class="disclaimer-bar">
+  ⚠️ &nbsp;<strong>Dados fictícios:</strong> Todos os dashboards utilizam dados simulados, criados exclusivamente para fins demonstrativos. Nenhum dado real é utilizado.
+</div>
+
+<!-- 🧭 Navegação superior -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">LS — Portfólio</a>
+  <div class="nav-links">
+    <a href="#sobre" class="nav-link">Sobre</a>
+    <a href="#habilidades" class="nav-link">Habilidades</a>
+    <a href="#experiencia" class="nav-link">Experiência</a>
+    <a href="#projetos" class="nav-link">Projetos</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- ════ HERO / SOBRE ════ -->
+<section class="hero" id="sobre">
+  <div class="hero-content">
+    <div class="eyebrow"><span class="live-dot"></span>Disponível para novas oportunidades</div>
+    <h1>Luma<br><span class="grad">Sampaio</span></h1>
+    <p class="hero-role"><strong>Analista de Dados</strong> · SQL · Automação · Compliance</p>
+
+    <!-- 🌟 Destaque Power BI Avançado -->
+    <div class="pbi-badge">⭐ Power BI Avançado &nbsp;·&nbsp; DAX &nbsp;·&nbsp; Power Query &nbsp;·&nbsp; Modelagem</div>
+
+    <p class="hero-summary">
+      Analista de Dados com atuação consolidada no setor financeiro e meios de pagamento,
+      combinando Business Intelligence, compliance e segurança da informação.
+      Perfil analítico com forte capacidade de traduzir riscos e dados complexos
+      em indicadores claros para áreas executivas. Trajetória construída de forma progressiva:
+      da operação para projetos, compliance e hoje em dados — com visão completa do negócio
+      em ambiente regulado.
+    </p>
+
+
+
+    <div class="hero-stats">
+      <div><div class="stat-val">10+</div><div class="stat-label">Anos de Exp.</div></div>
+      <div><div class="stat-val">SP</div><div class="stat-label">São Paulo</div></div>
+    </div>
+  </div>
+
+  <!-- 🃏 Card lateral com foto e contatos -->
+  <div class="hero-visual">
+    <div class="avatar-card">
+      <div class="avatar-photo-wrap">
+        <img class="avatar-photo"
+          src="https://media.licdn.com/dms/image/v2/D4D03AQG4qqPv1u93Wg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729132579927?e=1776297600&v=beta&t=ZWWgBs_TiIGun8bTTPuxDJfL6TpwD2fMXYOvE75vp-8"
+          alt="Luma Sampaio"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+        >
+        <div class="avatar-fallback">LS</div>
+      </div>
+      <div class="avatar-name">Luma Sampaio</div>
+      <div class="avatar-title">Analista de Dados · 33 anos</div>
+      <div class="avatar-pbi">⭐ Power BI Avançado</div>
+      <a href="mailto:luma.sampaio.dados@gmail.com" class="contact-link"><span>📧</span>luma.sampaio.dados@gmail.com</a>
+      <a href="tel:11980184975" class="contact-link"><span>📱</span>(11) 98018-4975</a>
+      <div class="contact-link"><span>📍</span>São Paulo · SP</div>
+      <a href="https://www.linkedin.com/in/luma-sampaio-15b6b953/" target="_blank" class="contact-link"><span>💼</span>LinkedIn</a>
+      <!-- 📥 Botão de download no card -->
+      <a href="Curriculo_Luma_Sampaio.pdf" download="Curriculo_Luma_Sampaio.pdf" class="cv-card-btn">⬇️ Baixar Currículo PDF</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ HABILIDADES ════ -->
+<section id="habilidades">
+  <div class="sec-eyebrow">Competências</div>
+  <h2 class="sec-title">Habilidades & Ferramentas</h2>
+  <p class="sec-sub">Stack técnica construída na prática em ambientes regulados e de alta exigência.</p>
+
+  <!-- 🌟 Bloco de destaque Power BI -->
+  <div class="pbi-featured">
+    <div class="pbi-icon-big">📊</div>
+    <div class="pbi-text">
+      <h3>Power BI — Nível Avançado</h3>
+      <p>
+        Criação de dashboards executivos completos com modelagem de dados, fórmulas DAX complexas,
+        relacionamentos entre tabelas, Power Query para ETL e publicação de relatórios interativos.
+        Aplicado em ambientes financeiros e de compliance com KPIs estratégicos e múltiplos módulos navegáveis.
+      </p>
+      <div class="pbi-tags">
+        <span class="pbi-tag">DAX Avançado</span>
+        <span class="pbi-tag">Power Query / ETL</span>
+        <span class="pbi-tag">Modelagem de Dados</span>
+        <span class="pbi-tag">KPIs Executivos</span>
+        <span class="pbi-tag">Relatórios Interativos</span>
+        <span class="pbi-tag">Drill-through</span>
+        <span class="pbi-tag">Row-Level Security</span>
+        <span class="pbi-tag">Publicação Corporativa</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card"><span class="skill-icon">📊</span><div class="skill-name">BI & Dashboards</div><div class="skill-desc">Power BI Avançado (DAX), Qlik Sense — KPIs financeiros, operacionais e de segurança.</div></div>
+    <div class="skill-card"><span class="skill-icon">🗄️</span><div class="skill-name">Dados & SQL</div><div class="skill-desc">Modelagem, manipulação e análise com SQL, DBeaver, Pentaho e Power Query.</div></div>
+    <div class="skill-card"><span class="skill-icon">⚙️</span><div class="skill-name">Automação</div><div class="skill-desc">Python (Pandas), Power Automate, Google Apps Script e integração com APIs.</div></div>
+    <div class="skill-card"><span class="skill-icon">🔐</span><div class="skill-name">Compliance & Risco</div><div class="skill-desc">PCI DSS, LGPD, gestão de acessos e governança da informação.</div></div>
+  </div>
+
+  <div class="tools-group"><div class="tools-group-title">BI & Dados</div><div class="chips-row"><span class="chip-t hi">Power BI Avançado</span><span class="chip-t hi">DAX</span><span class="chip-t hi">Power Query</span><span class="chip-t">SQL</span><span class="chip-t">Qlik Sense</span><span class="chip-t">Excel Avançado</span></div></div>
+  <div class="tools-group"><div class="tools-group-title">Automação & Engenharia</div><div class="chips-row"><span class="chip-t hi">Python (Pandas)</span><span class="chip-t">Power Automate</span><span class="chip-t">Google Apps Script</span><span class="chip-t">Pentaho</span><span class="chip-t">DBeaver</span><span class="chip-t">APIs REST</span></div></div>
+  <div class="tools-group"><div class="tools-group-title">Corporativo & Projetos</div><div class="chips-row"><span class="chip-t">Microsoft 365</span><span class="chip-t">SharePoint</span><span class="chip-t">MS Project</span><span class="chip-t">Bizagi</span><span class="chip-t tl">Metodologias Ágeis</span><span class="chip-t">Google Workspace</span><span class="chip-t">ERP/CRM</span></div></div>
+  <div class="tools-group"><div class="tools-group-title">Compliance & Segurança</div><div class="chips-row"><span class="chip-t hi">PCI DSS</span><span class="chip-t hi">LGPD</span><span class="chip-t">Gestão de Acessos</span><span class="chip-t">Governança da Informação</span><span class="chip-t">Gestão de Riscos</span></div></div>
+
+  <div style="margin-top:40px">
+    <div class="sec-eyebrow">Diferenciais</div>
+    <div class="diff-grid" style="margin-top:14px">
+      <div class="diff-card"><div class="diff-icon">💳</div><div class="diff-label">Setor Financeiro & Meios de Pagamento</div></div>
+      <div class="diff-card"><div class="diff-icon">🔒</div><div class="diff-label">PCI DSS e Ambientes Regulados</div></div>
+      <div class="diff-card"><div class="diff-icon">🔗</div><div class="diff-label">Integração Dados, Risco e Negócio</div></div>
+      <div class="diff-card"><div class="diff-icon">🧠</div><div class="diff-label">Perfil Analítico com Visão Estratégica</div></div>
+      <div class="diff-card"><div class="diff-icon">📈</div><div class="diff-label">KPIs Executivos e Insights Acionáveis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ EXPERIÊNCIA ════ -->
+<section id="experiencia">
+  <div class="sec-eyebrow">Trajetória</div>
+  <h2 class="sec-title">Experiência Profissional</h2>
+  <p class="sec-sub">Da operação para dados e estratégia — carreira construída de forma progressiva ao longo de mais de 10 anos.</p>
+
+  <div class="timeline">
+
+    <!-- 🟢 FASTPAY (atual — ponto verde) -->
+    <div class="tl-item">
+      <div class="exp-card">
+        <div class="exp-company-header">
+          <div class="exp-company-name">Fastpay</div>
+          <span class="exp-period">2023 – Atual</span>
+        </div>
+
+        <!-- Cargo 1: Analista de Dados -->
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Dados</div>
+          <ul class="cargo-bullets">
+            <li>Desenvolvimento de dashboards executivos utilizando <strong style="color:var(--orange2)">Power BI Avançado</strong> (DAX, modelagem, RLS) e Qlik Sense</li>
+            <li>Análise de dados de segurança da informação e gestão de acessos</li>
+            <li>Construção de KPIs financeiros, operacionais e de produção para áreas executivas</li>
+            <li>Modelagem e manipulação de dados com SQL (DBeaver)</li>
+            <li>Suporte à conformidade com PCI DSS e geração de insights estratégicos</li>
+            <li>Geração de insights para tomada de decisão em ambiente regulado</li>
+          </ul>
+        </div>
+
+        <!-- Cargo 2: Analista de Compliance -->
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Compliance</div>
+          <ul class="cargo-bullets">
+            <li>Implementação e monitoramento contínuo de controles PCI DSS</li>
+            <li>Gestão de políticas internas e código de conduta organizacional</li>
+            <li>Condução de campanhas de conscientização sobre phishing e engenharia social</li>
+            <li>Gestão do canal de ética e condução de processos internos</li>
+          </ul>
+        </div>
+
+        <!-- Cargo 3: Analista de Projetos -->
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Projetos</div>
+          <ul class="cargo-bullets">
+            <li>Planejamento de escopo, prazos e entregas de projetos estratégicos</li>
+            <li>Acompanhamento de cronogramas e comunicação com stakeholders</li>
+            <li>Desenvolvimento de dashboards para o PMO com monitoramento de KPIs</li>
+            <li>Identificação e gestão de riscos em projetos</li>
+          </ul>
+        </div>
+
+        <div class="exp-tags">
+          <span class="exp-tag">Power BI</span><span class="exp-tag">DAX</span><span class="exp-tag">Qlik Sense</span>
+          <span class="exp-tag">SQL</span><span class="exp-tag">PCI DSS</span><span class="exp-tag">LGPD</span><span class="exp-tag">PMO</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🟠 BANCO DIGIMAIS -->
+    <div class="tl-item">
+      <div class="exp-card">
+        <div class="exp-company-header">
+          <div class="exp-company-name">Banco Digimais</div>
+          <span class="exp-period">2022 – 2023</span>
+        </div>
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Produtos e Negócios Pleno</div>
+          <ul class="cargo-bullets">
+            <li>Análise de mercado, mapeamento de concorrentes e avaliação de viabilidade de novos produtos</li>
+            <li>Levantamento de requisitos junto às áreas de negócio e definição de escopo</li>
+            <li>Gestão ativa de stakeholders internos e externos</li>
+            <li>Implantação de produtos e identificação de oportunidades de melhoria</li>
+          </ul>
+        </div>
+        <div class="exp-tags">
+          <span class="exp-tag">Produto</span><span class="exp-tag">Negócios</span><span class="exp-tag">Fintech</span><span class="exp-tag">Gestão de Stakeholders</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🟠 INFRACOMMERCE -->
+    <div class="tl-item">
+      <div class="exp-card">
+        <div class="exp-company-header">
+          <div class="exp-company-name">Infracommerce</div>
+          <span class="exp-period">2018 – 2022</span>
+        </div>
+
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Projetos e Implantações</div>
+          <ul class="cargo-bullets">
+            <li>Gestão de projetos de implantação de plataformas B2B para grandes clientes</li>
+            <li>Planejamento de cronogramas, controle de entregas e gestão de riscos</li>
+            <li>Interface entre equipes técnicas, negócio e cliente</li>
+          </ul>
+        </div>
+
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Qualidade e Treinamento</div>
+          <ul class="cargo-bullets">
+            <li>Desenvolvimento e aplicação de treinamentos para equipes internas</li>
+            <li>Garantia de qualidade nos processos de implantação e entrega</li>
+            <li>Mapeamento de processos e elaboração de materiais de apoio</li>
+          </ul>
+        </div>
+
+        <div class="cargo-block">
+          <div class="cargo-title">Backoffice B2B</div>
+          <ul class="cargo-bullets">
+            <li>Suporte operacional às operações B2B da plataforma</li>
+            <li>Análise e resolução de ocorrências junto aos parceiros comerciais</li>
+          </ul>
+        </div>
+
+        <div class="exp-tags">
+          <span class="exp-tag">Projetos</span><span class="exp-tag">Qualidade</span><span class="exp-tag">Treinamento</span><span class="exp-tag">E-commerce</span><span class="exp-tag">B2B</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🟠 SERCOM -->
+    <div class="tl-item">
+      <div class="exp-card">
+        <div class="exp-company-header">
+          <div class="exp-company-name">Sercom</div>
+          <span class="exp-period">2014 – 2018</span>
+        </div>
+        <div class="cargo-block">
+          <div class="cargo-title">Analista de Atendimento ao Cliente</div>
+          <ul class="cargo-bullets">
+            <li>Atendimento ao cliente com foco em resolução de demandas e qualidade de serviço</li>
+            <li>Início da trajetória profissional — formação da base em comunicação e operação</li>
+          </ul>
+        </div>
+        <div class="exp-tags"><span class="exp-tag">Atendimento</span><span class="exp-tag">Operação</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Formação -->
+  <div style="margin-top:40px; display:flex; flex-wrap:wrap; gap:12px">
+    <div class="exp-card" style="flex:1;min-width:240px">
+      <div style="font-size:20px;margin-bottom:8px">🎓</div>
+      <div style="font-size:15px;font-weight:800">Análise e Desenvolvimento de Sistemas (ADS)</div>
+      <div style="font-size:11px;color:var(--teal);margin-top:4px">Em andamento</div>
+    </div>
+    <div class="exp-card" style="flex:1;min-width:240px">
+      <div style="font-size:20px;margin-bottom:8px">📚</div>
+      <div style="font-size:15px;font-weight:800">Cursos Complementares</div>
+      <div style="font-size:12px;color:var(--text3);margin-top:6px;line-height:1.7">
+        Power BI Avançado · Excel Avançado · LGPD — Lei Geral de Proteção de Dados
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROJETOS ════ -->
+<section id="projetos">
+  <div class="sec-eyebrow">Trabalhos</div>
+  <h2 class="sec-title">Projetos & Dashboards</h2>
+  <p class="sec-sub">Painéis executivos com foco em decisão rápida e insights estratégicos.</p>
+
+  <!-- ⚠️ Aviso de dados fictícios na seção de projetos -->
+  <div class="data-notice">
+    <span style="font-size:20px;flex-shrink:0">⚠️</span>
+    <span><strong>Dados fictícios:</strong> Todos os dashboards abaixo utilizam dados simulados, criados exclusivamente para fins ilustrativos e demonstrativos. Nenhum dado real de clientes ou empresas é utilizado.</span>
+  </div>
+
+  <div class="projects-grid">
+    <!-- 💊 Dashboard LumaFarma -->
+    <a href="dashboard-lumafarma.html" class="proj-card">
+      <div class="proj-head"><span class="proj-ico">💊</span><span class="proj-badge">● Ao vivo</span></div>
+      <div class="proj-title">Dashboard LumaFarma</div>
+      <div class="proj-desc">Painel executivo completo para gestão de farmácia com 7 módulos: financeiro, vendas, estoque crítico, indicadores farmacêuticos e insights de IA.</div>
+      <div class="proj-tags"><span class="pt">Financeiro</span><span class="pt">Estoque</span><span class="pt">KPIs</span><span class="pt">Alertas</span><span class="pt">Forecast IA</span></div>
+      <div class="proj-arrow">Abrir Dashboard →</div>
+      <div class="proj-fictional">* Dados fictícios para demonstração</div>
+    </a>
+
+    <!-- 🏦 Dashboard Financeiro -->
+    <a href="dashboard-financeiro.html" class="proj-card">
+      <div class="proj-head"><span class="proj-ico">🏦</span><span class="proj-badge">● Ao vivo</span></div>
+      <div class="proj-title">Dashboard Financeiro</div>
+      <div class="proj-desc">Indicadores financeiros para meios de pagamento: transações, chargeback, compliance e risco operacional.</div>
+      <div class="proj-tags"><span class="pt">Meios de Pagamento</span><span class="pt">Risco</span><span class="pt">PCI DSS</span><span class="pt">Chargeback</span></div>
+      <div class="proj-arrow">Abrir Dashboard →</div>
+      <div class="proj-fictional">* Dados fictícios para demonstração</div>
+    </a>
+
+    <!-- 🔐 Dashboard Segurança -->
+    <a href="dashboard-seguranca.html" class="proj-card">
+      <div class="proj-head"><span class="proj-ico">🔐</span><span class="proj-badge">● Ao vivo</span></div>
+      <div class="proj-title">Dashboard Segurança</div>
+      <div class="proj-desc">Segurança da informação e acessos: monitoramento de incidentes, usuários críticos e conformidade regulatória.</div>
+      <div class="proj-tags"><span class="pt">Segurança</span><span class="pt">Compliance</span><span class="pt">LGPD</span><span class="pt">Acessos</span></div>
+      <div class="proj-arrow">Abrir Dashboard →</div>
+      <div class="proj-fictional">* Dados fictícios para demonstração</div>
+    </a>
+  </div>
+</section>
+
+<!-- ════ FOOTER ════ -->
+<footer class="footer-sec">
+  <div>
+    <div class="footer-logo">Luma Sampaio</div>
+    <div class="footer-note" style="margin-top:5px">Analista de Dados · Power BI Avançado · São Paulo – SP</div>
+  </div>
+  <div class="footer-links">
+    <!-- 📥 Download no footer também -->
+    <a href="Curriculo_Luma_Sampaio.pdf" download="Curriculo_Luma_Sampaio.pdf" class="footer-link">⬇️ Curriculo</a>
+    <a href="mailto:luma.sampaio.dados@gmail.com" class="footer-link">📧 Email</a>
+    <a href="https://www.linkedin.com/in/luma-sampaio-15b6b953/" target="_blank" class="footer-link">💼 LinkedIn</a>
+    <a href="index.html" class="footer-link">← Início</a>
+  </div>
+</footer>
+
+</main>
+
+<script>
+  /* ✨ Animação de entrada dos cards ao rolar a página (scroll reveal)
+     Usa IntersectionObserver para animar os elementos quando entram na tela */
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  /* Aplica a animação inicial e observa cada elemento */
+  document.querySelectorAll('.skill-card, .diff-card, .proj-card, .tl-item, .exp-card').forEach(function (el) {
+    el.style.cssText += 'opacity:0; transform:translateY(18px); transition:opacity .5s, transform .5s;';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
